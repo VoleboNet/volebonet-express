@@ -1,0 +1,61 @@
+{
+	"name": "volebonet-express",
+	"version": "0.0.1",
+	"description": "ExpressJS server for volebo.net",
+	"main": "index.js",
+	"scripts": {
+		"test": "node_modules/.bin/mocha"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/VoleboNet/volebonet-express.git"
+	},
+	"keywords": [
+		"express",
+		"expressjs",
+		"private",
+		"volebonet"
+	],
+	"author": {
+		"name": "VoleboNet",
+		"url": "http://volebo.net"
+	},
+	"contributors": [
+		{
+			"name": "Koryukov Maksim",
+			"email": "maxkoryukov@gmail.com"
+		}
+	],
+	"os": [
+		"linux"
+	],
+	"engines": {
+		"node": ">=4.0.0",
+		"npm": ">=3.0.0"
+	},
+	"license": "GPL-3.0",
+	"bugs": {
+		"url": "https://github.com/VoleboNet/volebonet-express/issues"
+	},
+	"homepage": "https://github.com/VoleboNet/volebonet-express",
+	"dependencies": {
+		"body-parser": "~1.15.1",
+		"cookie-parser": "~1.4.3",
+		"dotenv": "^2.0.0",
+		"debug": "~2.2.0",
+		"express": "^4.14.0",
+		"express-session": "^1.13.0",
+		"express-handlebars": "^3.0.0",
+		"morgan": "~1.7.0"
+	},
+	"devDependencies": {
+		"@volebonet/eslint-config-volebonet": "0.0.1",
+		"eslint": "^2.11.1",
+		"chai": "^3.5.0",
+		"gulp": "^3.9.1",
+		"gulp-eslint": "^2.0.0",
+		"gulp-rename": "^1.2.2",
+		"gulp-uglify": "^1.5.3",
+		"mocha": "^2.5.3"
+	}
+}

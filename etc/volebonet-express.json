@@ -1,0 +1,25 @@
+{
+	"debug": {
+		"renderStack": true,
+		"staticPath": "public"
+	},
+
+	"cookie": {
+		"secret" : "",
+		"secure" : false,
+		"domain": []
+	},
+
+	"rproxy":
+	{
+		"trust_level" : 0
+	},
+
+	"db" : {
+		"username": "",
+		"password": "",
+		"database": "",
+		"host": "localhost",
+		"benchmark": true
+	}
+}
