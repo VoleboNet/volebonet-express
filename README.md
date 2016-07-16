@@ -14,7 +14,7 @@ Custom application configuration. With all our own crutches and fixes.
 
 ## Credits
 
-* [ExpressJS](expressjs.com)
+* [ExpressJS](http://expressjs.com)
 
 ## License
 
