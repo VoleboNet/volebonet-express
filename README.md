@@ -10,7 +10,7 @@ Handlebars engine
 
 #### `app.config`
 
-Custom application configuration. With all our own crutches and fixes.
+Custom configuration of the server. It contains our own crutches and fixes.
 
 ## Credits
 

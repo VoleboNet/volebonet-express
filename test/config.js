@@ -23,9 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 var assert = require('chai').assert;
 var path   = require('path');
 
-/* COMMON MODEL INIT BLOCK */
+/* ROOT of the package */
 var rt = process.cwd();
-/* COMMON MODEL INIT BLOCK */
 
 var vbexpress = require(path.join(rt, ''));
 
@@ -36,7 +35,6 @@ describe('config', function(){
 
 		assert.isDefined(app.config);
 		assert.isNotNull(app.config);
-		assert.isDefined(app.config.security, '');
 	});
 
 	describe('default values', function() {
@@ -45,7 +43,6 @@ describe('config', function(){
 		beforeEach( () => {
 			app = vbexpress();
 		});
-
 
 		it('debug.renderStack', () =>
 			assert.equal(app.config.debug.renderStack, false)

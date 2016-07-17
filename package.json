@@ -1,5 +1,5 @@
 {
-	"name": "volebonet-express",
+	"name": "@volebonet/volebonet-express",
 	"version": "0.0.1",
 	"description": "ExpressJS server for volebo.net",
 	"main": "index.js",
@@ -13,7 +13,6 @@
 	"keywords": [
 		"express",
 		"expressjs",
-		"private",
 		"volebonet"
 	],
 	"author": {

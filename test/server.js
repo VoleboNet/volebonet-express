@@ -23,9 +23,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 var assert = require('chai').assert;
 var path   = require('path');
 
-/* COMMON MODEL INIT BLOCK */
+/* ROOT of the package */
 var rt = process.cwd();
-/* COMMON MODEL INIT BLOCK */
 
 describe('server run and re-run', function(){
 
@@ -38,6 +37,7 @@ describe('server run and re-run', function(){
 		'should run after restart',
 	].forEach(function(description){
 		it(description, function (done) {
+			// TODO: #4 should use promise here
 			app.start();
 			assert.isTrue(true);
 			app.close(done);

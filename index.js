@@ -20,30 +20,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
 
-require('dotenv').config({silent: true});
+require('dotenv').config({ silent: true });
 
-const debug = require('debug')('volebo:express');
-const http  = require('http');
-
-/**
- * Normalize a port into a number, string, or false.
- */
-
-function normalizePort(val) {
-	var port = parseInt(val, 10);
-
-	if (isNaN(port)) {
-		// named pipe
-		return val;
-	}
-
-	if (port >= 0) {
-		// port number
-		return port;
-	}
-
-	return false;
-}
+const debug           = require('debug')('volebonet:express');
+const express         = require('express');
+const http            = require('http');
 
 let deprecated_error_die = function(msg) {
 	throw new Error(msg);
@@ -56,25 +37,22 @@ EXPORT
 ====================================
 */
 
-let vbexp = function() {
+let vbexp = function(options) {
 
-	let app = require('./lib/app');
-	let server = undefined;
+	// TODO: #3 implement `options` handling
+	debug('SORRY, my friend, I will ignore passed config, I am too young ' +
+		'to deal with it...');
+
+	let app = require('./lib/server');
+
 	app.start = function app_start()
 	{
+		// append error handlers:
+		app.onStarting();
+
 		// Get port from environment and store in Express.
-		var port = normalizePort(process.env.PORT || '3000');
-		app.set('port', port);
-
-		// NOT FOUND HANDLER
-		// TODO : move to app.js:
-		// catch 404 and forward to error handler
-		app.use(function(req, res, next) {
-			var err = new Error('Not Found');
-			err.status = 404;
-			next(err);
-		});
-
+		let port = app.config.server.port;
+		let host = app.config.server.host;
 
 		/**
 		 * Event listener for HTTP server "listening" event.
@@ -88,6 +66,9 @@ let vbexp = function() {
 		}
 
 		let onError = function onError(error) {
+
+			// TODO : #2 handle errors and write to the error log!!
+
 			if (error.syscall !== 'listen') {
 				throw error;
 			}
@@ -110,20 +91,27 @@ let vbexp = function() {
 		}
 
 		// Create HTTP server.
-		server = http.createServer(app);
+		let server = http.createServer(app);
 
 		server.on('error', onError);
 		server.on('listening', onListening);
 
+		// TODO : #4 add promise, or not to add...
+
 		// Listen on provided port, on all network interfaces.
-		let x = server.listen(port);
+		let instance = server.listen(port, host /* , TODO: CALLBACK */);
 		app.close = function() {
-			return x.close.apply(x, arguments);
+			return instance.close.apply(instance, arguments);
 		};
 
+		return;
 	}
 
 	return app;
+}
+
+vbexp.Router = function vbexp_Router() {
+	return express.Router.apply(express, arguments);
 }
 
 exports = module.exports = vbexp;
