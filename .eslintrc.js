@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const path = require('path');
 
 exports = module.exports = {
-    "extends": [
-        path.join(__dirname, 'node_modules', 'eslint-config-volebonet', 'index.js')
-    ]
+	"extends": [
+		path.join(__dirname, 'node_modules', 'eslint-config-volebonet', 'index.js')
+	]
 }
