@@ -16,6 +16,16 @@ Handlebars engine
 
 Custom configuration of the server. It contains our own crutches and fixes.
 
+### Request and Response
+
+`req` and `res` are extended with additional fields. Here is a description of such fields.
+
+The **expressjs** often works behind NGINX (reverse proxy), in this case frontend server performs a lot of work (encryption, compressing..). The backend should know several things about FE server.
+
+#### `req.forwardedSecure`
+
+Describes, whether the frontend server currently handles HTTPS query (after proxifying it becomes HTTP).
+
 ## Credits
 
 * [ExpressJS](http://expressjs.com)
