@@ -32,15 +32,21 @@ describe('server run and re-run', function(){
 	var vbexpress = require(path.join(rt, ''));
 	var app = vbexpress();
 
+	beforeEach(function(done) {
+		app.start(done);
+	});
+
+	afterEach(function(done) {
+		app.close(done);
+	});
+
 	[
 		'run out of the box',
 		'should run after restart',
 	].forEach(function(description){
-		it(description, function (done) {
-			// TODO: #4 should use promise here
-			app.start();
+
+		it(description, function () {
 			assert.isTrue(true);
-			app.close(done);
 		});
 	});
 });

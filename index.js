@@ -26,8 +26,12 @@ const debug           = require('debug')('volebonet:express');
 const express         = require('express');
 const http            = require('http');
 
-let deprecated_error_die = function(msg) {
-	throw new Error(msg);
+let deprecated_error_die = function(done, msg) {
+	var e = new Error(msg);
+	if (done){
+		done(e);
+	}
+	throw e;
 	//process.exit(1);
 }
 
@@ -45,7 +49,7 @@ let vbexp = function(options) {
 
 	let app = require('./lib/server');
 
-	app.start = function app_start()
+	app.start = function app_start(done)
 	{
 		// append error handlers:
 		app.onStarting();
@@ -63,6 +67,10 @@ let vbexp = function(options) {
 				? 'pipe ' + addr
 				: 'port ' + addr.port;
 			debug('Listening on ' + bind);
+
+			if (done){
+				done();
+			}
 		}
 
 		let onError = function onError(error) {
@@ -80,12 +88,15 @@ let vbexp = function(options) {
 			// handle specific listen errors with friendly messages
 			switch (error.code) {
 			case 'EACCES':
-				deprecated_error_die(bind + ' requires elevated privileges');
+				deprecated_error_die(done, bind + ' requires elevated privileges');
 				break;
 			case 'EADDRINUSE':
-				deprecated_error_die(bind + ' is already in use');
+				deprecated_error_die(done, bind + ' is already in use');
 				break;
 			default:
+				if (done){
+					return done(error);
+				}
 				throw error;
 			}
 		}
@@ -95,8 +106,6 @@ let vbexp = function(options) {
 
 		server.on('error', onError);
 		server.on('listening', onListening);
-
-		// TODO : #4 add promise, or not to add...
 
 		// Listen on provided port, on all network interfaces.
 		let instance = server.listen(port, host /* , TODO: CALLBACK */);
