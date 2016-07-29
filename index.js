@@ -41,7 +41,7 @@ EXPORT
 ====================================
 */
 
-let vbexp = function(options) {
+let vbexp = function(/* TODO: #3 options*/) {
 
 	// TODO: #3 implement `options` handling
 	debug('SORRY, my friend, I will ignore passed config, I am too young ' +
