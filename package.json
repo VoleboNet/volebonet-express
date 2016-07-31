@@ -53,10 +53,10 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^2.11.1",
+    "eslint": "^3.2.0",
     "eslint-config-volebonet": "^1.1.0",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^2.0.0",
+    "gulp-eslint": "^3.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.5.3",
     "istanbul": "^0.4.4",
