@@ -41,13 +41,9 @@ EXPORT
 ====================================
 */
 
-let vbexp = function(/* TODO: #3 options*/) {
+let vbexp = function(options) {
 
-	// TODO: #3 implement `options` handling
-	debug('SORRY, my friend, I will ignore passed config, I am too young ' +
-		'to deal with it...');
-
-	let app = require('./lib/server');
+	let app = require('./lib/server')(options);
 
 	app.start = function app_start(done)
 	{
