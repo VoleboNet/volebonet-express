@@ -1,5 +1,7 @@
 # volebonet-express
 
+[![Build Status](https://travis-ci.org/VoleboNet/volebonet-express.svg?branch=master)](https://travis-ci.org/VoleboNet/volebonet-express)
+[![codecov](https://codecov.io/gh/VoleboNet/volebonet-express/branch/master/graph/badge.svg)](https://codecov.io/gh/VoleboNet/volebonet-express)
 [![bitHound Overall Score](https://www.bithound.io/github/VoleboNet/volebonet-express/badges/score.svg)](https://www.bithound.io/github/VoleboNet/volebonet-express)
 [![bitHound Dependencies](https://www.bithound.io/github/VoleboNet/volebonet-express/badges/dependencies.svg)](https://www.bithound.io/github/VoleboNet/volebonet-express/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/VoleboNet/volebonet-express/badges/devDependencies.svg)](https://www.bithound.io/github/VoleboNet/volebonet-express/master/dependencies/npm)
@@ -29,6 +31,11 @@ app.use('/', routes);
 app.start();
 ```
 
+## Features
+
+* [`lang`][express-mw-lang] middleware enabled
+* `passport` enabled
+
 ## Additional properties
 
 #### `app.config`
@@ -41,7 +48,7 @@ Handlebars engine
 
 #### `app.lang`
 
-Express router, created by the [express-mw-lang] module.
+Express router, created by the [`express-mw-lang`][express-mw-lang] module.
 
 ### Request and Response
 
@@ -67,6 +74,7 @@ All thanks and praises goes to:
 
 * [ExpressJS](http://expressjs.com) and many contributors of the [ExpressJS org](https://github.com/expressjs)
 * [Express Handlebars](https://github.com/ericf/express-handlebars)
+* [PassportJS](http://passportjs.org/) and Jared Hanson
 
 ## License
 
