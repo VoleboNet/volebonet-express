@@ -2,16 +2,15 @@
 
 .github/
 test/
-ndde_modules/
 coverage/
 CONTRIBUTING.md
 HEADER
 .bithoundrc
+.codeclimate.yml
 .editorconfig
 .eslintignore
 .eslintrc.js
 .gitignore
 .node-inspectorrc
-.npmignore
 .travis.yml
 gulpfile.js
