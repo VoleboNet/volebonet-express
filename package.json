@@ -63,7 +63,7 @@
     "gulp-rename": "^1.2.x",
     "gulp-uglify": "^1.5.x",
     "istanbul": "^0.4.x",
-    "mocha": "^2.5.x",
+    "mocha": "^3.0.x",
     "supertest": "^2.0.x"
   }
 }
