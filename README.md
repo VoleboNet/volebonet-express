@@ -1,10 +1,10 @@
-# volebonet-express
+# volebo-express
 
-[![Build Status](https://travis-ci.org/VoleboNet/volebonet-express.svg?branch=master)](https://travis-ci.org/VoleboNet/volebonet-express)
-[![codecov](https://codecov.io/gh/VoleboNet/volebonet-express/branch/master/graph/badge.svg)](https://codecov.io/gh/VoleboNet/volebonet-express)
-[![bitHound Overall Score](https://www.bithound.io/github/VoleboNet/volebonet-express/badges/score.svg)](https://www.bithound.io/github/VoleboNet/volebonet-express)
-[![bitHound Dependencies](https://www.bithound.io/github/VoleboNet/volebonet-express/badges/dependencies.svg)](https://www.bithound.io/github/VoleboNet/volebonet-express/master/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/VoleboNet/volebonet-express/badges/devDependencies.svg)](https://www.bithound.io/github/VoleboNet/volebonet-express/master/dependencies/npm)
+[![Build Status](https://travis-ci.org/volebo/volebo-express.svg?branch=master)](https://travis-ci.org/volebo/volebo-express)
+[![codecov](https://codecov.io/gh/volebo/volebo-express/branch/master/graph/badge.svg)](https://codecov.io/gh/volebo/volebo-express)
+[![bitHound Overall Score](https://www.bithound.io/github/volebo/volebo-express/badges/score.svg)](https://www.bithound.io/github/volebo/volebo-express)
+[![bitHound Dependencies](https://www.bithound.io/github/volebo/volebo-express/badges/dependencies.svg)](https://www.bithound.io/github/volebo/volebo-express/master/dependencies/npm)
+[![bitHound Dev Dependencies](https://www.bithound.io/github/volebo/volebo-express/badges/devDependencies.svg)](https://www.bithound.io/github/volebo/volebo-express/master/dependencies/npm)
 
 Express JS server for Volebo.Net
 
@@ -18,7 +18,7 @@ Then, just follow this sample:
 "use strict";
 
 // require the module:
-const vbexpress       = require('@volebonet/volebonet-express');
+const vbexpress       = require('@volebo/volebo-express');
 
 // create an instance with appropriate options:
 var app = vbexpress( { "options" : "your options here"} );
