@@ -1,5 +1,5 @@
 {
-  "name": "@volebonet/volebonet-express",
+  "name": "@volebo/volebo-express",
   "version": "0.2.0",
   "description": "ExpressJS server for volebo.net",
   "main": "index.js",
@@ -9,15 +9,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VoleboNet/volebonet-express.git"
+    "url": "git+https://github.com/volebo/volebo-express.git"
   },
   "keywords": [
     "express",
     "expressjs",
-    "volebonet"
+    "volebo.net",
+    "volebo"
   ],
   "author": {
-    "name": "VoleboNet",
+    "name": "volebo",
     "url": "http://volebo.net"
   },
   "contributors": [
@@ -35,9 +36,9 @@
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/VoleboNet/volebonet-express/issues"
+    "url": "https://github.com/volebo/volebo-express/issues"
   },
-  "homepage": "https://github.com/VoleboNet/volebonet-express",
+  "homepage": "https://github.com/volebo/volebo-express",
   "dependencies": {
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
@@ -54,15 +55,15 @@
     "passport": "^0.3.2"
   },
   "devDependencies": {
-    "chai": "^3.5.0",
-    "eslint": "^3.2.0",
-    "eslint-config-volebonet": "^1.1.0",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
-    "gulp-rename": "^1.2.2",
-    "gulp-uglify": "^1.5.3",
-    "istanbul": "^0.4.4",
-    "mocha": "^2.5.3",
-    "supertest": "^2.0.0"
+    "chai": "^3.5.x",
+    "eslint": "^3.2.x",
+    "eslint-config-volebo": "^1.x",
+    "gulp": "^3.9.x",
+    "gulp-eslint": "^3.0.x",
+    "gulp-rename": "^1.2.x",
+    "gulp-uglify": "^1.5.x",
+    "istanbul": "^0.4.x",
+    "mocha": "^2.5.x",
+    "supertest": "^2.0.x"
   }
 }
