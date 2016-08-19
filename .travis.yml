@@ -49,6 +49,7 @@ script:
 
 # testing provided by coverage
 #  - npm test
+  - npm run lint
   - npm run coverage
   - bithound check git@github.com:volebo/volebo-express.git
 
