@@ -54,6 +54,9 @@ let vbexp = function(options) {
 		let port = app.config.server.port;
 		let host = app.config.server.host;
 
+		// Create HTTP server.
+		let server = http.createServer(app);
+
 		/**
 		 * Event listener for HTTP server "listening" event.
 		 */
@@ -96,9 +99,6 @@ let vbexp = function(options) {
 				throw error;
 			}
 		}
-
-		// Create HTTP server.
-		let server = http.createServer(app);
 
 		server.on('error', onError);
 		server.on('listening', onListening);

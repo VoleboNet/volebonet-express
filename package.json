@@ -65,6 +65,6 @@
     "gulp-uglify": "^2.x",
     "istanbul": "^0.4.x",
     "mocha": "^3.x",
-    "supertest": "^2.x"
+    "supertest": "^2.0.0"
   }
 }
