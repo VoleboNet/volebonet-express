@@ -42,7 +42,6 @@
   "homepage": "https://github.com/volebo/volebo-express",
   "dependencies": {
     "body-parser": "~1.15.1",
-    "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "dotenv": "^2.0.0",
     "eslint": "^3.2.2",
