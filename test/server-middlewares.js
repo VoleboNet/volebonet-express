@@ -20,8 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
 
-var assert     = require('chai').assert;
-var path       = require('path');
+//var assert     = require('chai').assert;
 const request  = require('supertest');
 
 /* ROOT of the package */
@@ -53,8 +52,7 @@ describe('server-middlewares', function(){
 
 		before( done=> {
 			app.get('/forwardedSecure', (req, res, next) => {
-				return res.send(req.forwardedSecure).status(200);
-				next();
+				res.send(req.forwardedSecure).status(200);
 			});
 
 			app.start(done);
