@@ -49,21 +49,21 @@
     "express-handlebars": "^3.0.0",
     "express-mw-lang": "^1.2.3",
     "express-session": "^1.13.0",
-    "lodash": "^4.14.1",
+    "lodash": "^4.14.2",
     "moment": "^2.14.1",
     "morgan": "~1.7.0",
     "passport": "^0.3.2"
   },
   "devDependencies": {
-    "chai": "^3.5.x",
-    "eslint": "^3.2.x",
+    "chai": "^3.x",
+    "eslint": "^3.x",
     "eslint-config-volebo": "^1.x",
-    "gulp": "^3.9.x",
-    "gulp-eslint": "^3.0.x",
-    "gulp-rename": "^1.2.x",
-    "gulp-uglify": "^1.5.x",
+    "gulp": "^3.x",
+    "gulp-eslint": "^3.x",
+    "gulp-rename": "^1.x",
+    "gulp-uglify": "^2.x",
     "istanbul": "^0.4.x",
-    "mocha": "^2.5.x",
-    "supertest": "^2.0.x"
+    "mocha": "^3.x",
+    "supertest": "^2.x"
   }
 }
