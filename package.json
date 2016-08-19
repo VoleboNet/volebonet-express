@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "`npm bin`/mocha",
+    "lint": "`npm bin`/eslint ./",
     "coverage": "`npm bin`/istanbul cover `npm bin`/_mocha"
   },
   "repository": {
