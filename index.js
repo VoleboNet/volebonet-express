@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 require('dotenv').config({ silent: true });
 
-const debug           = require('debug')('volebonet:express');
+const debug           = require('debug')('volebo:express');
 const express         = require('express');
 const http            = require('http');
 
