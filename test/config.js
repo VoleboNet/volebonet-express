@@ -49,12 +49,12 @@ describe('config', function(){
 		);
 
 		it('cookie.secure', () =>
-			assert.equal(app.config.cookie.secure, false)
+			assert.equal(app.config.session.secure, false)
 		);
 
 		it('cookie.domain', () => {
-			assert.isArray(app.config.cookie.domain);
-			assert.lengthOf(app.config.cookie.domain, 0);
+			assert.isArray(app.config.session.domain);
+			assert.lengthOf(app.config.session.domain, 0);
 		});
 	});
 });
