@@ -112,7 +112,6 @@ describe('server-middlewares', function(){
 		it('should render template after multiple call to `setLocale`', done => {
 
 			app.get('/multiSetCulture', (req, res, next) => {
-				let optionsAndContext = null;
 
 				req.lang.setLocale('en');
 				req.lang.setLocale('ru');
