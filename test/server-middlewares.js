@@ -80,4 +80,52 @@ describe('server-middlewares', function(){
 		});
 
 	});
+
+	describe('check "onLangCodeReady"', () => {
+
+		var app = null;
+
+		beforeEach(() => {
+			app = vbexpress();
+		});
+		afterEach(done => {
+			app.close(done);
+		});
+
+		it('should render template with undefined render.options', done => {
+
+			app.config.debug.renderStack = true;
+
+			app.get('/renderNullOptions', (req, res, next) => {
+				let optionsAndContext = null;
+				return res.render('error', optionsAndContext);
+			});
+
+			app.start( () => {
+				request(app)
+					.get('/renderNullOptions')
+					.expect(200, done);
+			});
+		});
+
+
+		it('should render template after multiple call to `setLocale`', done => {
+
+			app.get('/multiSetCulture', (req, res, next) => {
+				let optionsAndContext = null;
+
+				req.lang.setLocale('en');
+				req.lang.setLocale('ru');
+				req.lang.setLocale('en');
+
+				return res.render('error');
+			});
+
+			app.start( () => {
+				request(app)
+					.get('/multiSetCulture')
+					.expect(200, done);
+			});
+		});
+	});
 });

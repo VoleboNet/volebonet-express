@@ -28,11 +28,8 @@ const http            = require('http');
 
 let deprecated_error_die = function(done, msg) {
 	var e = new Error(msg);
-	if (done){
-		done(e);
-	}
-	throw e;
-	//process.exit(1);
+
+	done(e);
 }
 
 /*
@@ -47,6 +44,13 @@ let vbexp = function(options) {
 
 	app.start = function app_start(done)
 	{
+		if (!done) {
+			done = function(err) {
+				if (err) {
+					throw err;
+				}
+			}
+		}
 		// append error handlers:
 		app.onStarting();
 
@@ -67,9 +71,7 @@ let vbexp = function(options) {
 				: 'port ' + addr.port;
 			debug('Listening on ' + bind);
 
-			if (done){
-				done();
-			}
+			done();
 		}
 
 		let onError = function onError(error) {
@@ -93,10 +95,7 @@ let vbexp = function(options) {
 				deprecated_error_die(done, bind + ' is already in use');
 				break;
 			default:
-				if (done){
-					return done(error);
-				}
-				throw error;
+				return done(error);
 			}
 		}
 
