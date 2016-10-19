@@ -52,9 +52,13 @@ Express router, created by the [`express-mw-lang`][express-mw-lang] module.
 
 ### Request and Response
 
-`req` and `res` are extended with additional fields. Here is a description of such fields.
+This module extends standart `req` and `res` with additional fields. Also, this module is sensitive to several fields of the `req` and `res`.
 
-The **expressjs** often works behind NGINX (reverse proxy), in this case frontend server performs a lot of work (encryption, compressing..). The backend should know several things about FE server.
+#### `res.helpers`
+
+This object will be used as **per-request** HBS-helpers (see [this documentation][express-hbs-helpers] for additional details).
+
+The main purpose: set **locale** for handling current request with client's locale settings.
 
 #### `res.locals.lang`
 
@@ -81,3 +85,4 @@ All thanks and praises goes to:
 Please, follow the link: [LICENSE](LICENSE)
 
 [express-mw-lang]: ../../../express-mw-lang
+[express-hbs-helpers]: https://www.npmjs.com/package/express-handlebars#helpers-1
