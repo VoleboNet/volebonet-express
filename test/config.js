@@ -48,11 +48,12 @@ describe('config', function(){
 			assert.equal(app.config.debug.renderStack, false)
 		);
 
-		it('cookie.secure', () =>
+		it('session.secure', () =>
 			assert.equal(app.config.session.secure, false)
 		);
 
-		it('cookie.domain', () => {
+
+		it('session.domain', () => {
 			assert.isArray(app.config.session.domain);
 			assert.lengthOf(app.config.session.domain, 0);
 		});
