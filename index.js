@@ -26,6 +26,9 @@ const debug           = require('debug')('volebo:express');
 const express         = require('express');
 const http            = require('http');
 
+const Config          = require('./lib/config');
+const VoleboExpress   = require('./lib/server');
+
 let deprecated_error_die = function(done, msg) {
 	var e = new Error(msg);
 
@@ -40,7 +43,7 @@ EXPORT
 
 let vbexp = function(options) {
 
-	let app = require('./lib/server')(options);
+	let app = /* TODO: use new */ VoleboExpress(options);
 
 	app.start = function app_start(done)
 	{
@@ -117,5 +120,7 @@ let vbexp = function(options) {
 vbexp.Router = function vbexp_Router() {
 	return express.Router.apply(express, arguments);
 }
+
+vbexp.Config = Config;
 
 exports = module.exports = vbexp;
