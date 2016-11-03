@@ -61,5 +61,9 @@ describe('config', function(){
 		it('auth.enabled', () => {
 			assert.equal(app.config.auth.enabled, true);
 		});
+
+		it('model.enabled', () => {
+			assert.equal(app.config.model.enabled, false);
+		});
 	});
 });
