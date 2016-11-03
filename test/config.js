@@ -57,5 +57,9 @@ describe('config', function(){
 			assert.isArray(app.config.session.domain);
 			assert.lengthOf(app.config.session.domain, 0);
 		});
+
+		it('auth.enabled', () => {
+			assert.equal(app.config.auth.enabled, true);
+		});
 	});
 });
