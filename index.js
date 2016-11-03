@@ -27,7 +27,7 @@ const express         = require('express');
 const http            = require('http');
 
 const Config          = require('./lib/config');
-const VoleboExpress   = require('./lib/server');
+const createServer    = require('./lib/server');
 
 let deprecated_error_die = function(done, msg) {
 	var e = new Error(msg);
@@ -43,7 +43,7 @@ EXPORT
 
 let vbexp = function(options) {
 
-	let app = /* TODO: use new */ VoleboExpress(options);
+	let app = /* TODO: use new */ createServer(options);
 
 	app.start = function app_start(done)
 	{
