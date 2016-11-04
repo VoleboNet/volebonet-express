@@ -23,11 +23,16 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 require('dotenv').config({ silent: true });
 
 const debug           = require('debug')('volebo:express');
-const express         = require('express');
+const fs              = require('fs');
 const http            = require('http');
+const express         = require('express');
 
 const Config          = require('./lib/config');
 const createServer    = require('./lib/server');
+
+// TODO : #2 use LOGGER!!!
+// BUG: #2
+const log             = console;
 
 let deprecated_error_die = function(done, msg) {
 	var e = new Error(msg);
@@ -43,7 +48,7 @@ EXPORT
 
 let vbexp = function(options) {
 
-	let app = /* TODO: use new */ createServer(options);
+	let app = createServer(options);
 
 	app.start = function app_start(done)
 	{
@@ -55,11 +60,38 @@ let vbexp = function(options) {
 			}
 		}
 		// append error handlers:
-		app.onStarting();
+		app._onStarting();
 
 		// Get port from environment and store in Express.
-		let port = app.config.server.port;
 		let host = app.config.server.host;
+		let port = app.config.server.port;
+		let localpath = app.config.server.path;
+
+		if (localpath) {
+			debug('will listen on localpath');
+			host = null;
+			port = null;
+
+			try {
+				let stat = fs.statSync(localpath);
+				if (stat.isSocket()) {
+					debug('remove existing socket file', localpath);
+
+					fs.unlinkSync(localpath);
+				} else {
+					deprecated_error_die(done, 'Can not start server, listening on NON-SOCKET file');
+				}
+			} catch (e) {
+				if (e.code === 'ENOENT' && e.syscall==='stat') {
+					// do nothing, localpaht-file does not exist
+				} else {
+					throw e;
+				}
+			}
+		} else {
+			debug('will listen on host:port');
+			localpath = null;
+		}
 
 		// Create HTTP server.
 		let server = http.createServer(app);
@@ -70,9 +102,9 @@ let vbexp = function(options) {
 		let onListening = function onListening() {
 			var addr = server.address();
 			var bind = typeof addr === 'string'
-				? 'pipe ' + addr
-				: 'port ' + addr.port;
-			debug('Listening on ' + bind);
+				? `pipe ${addr}`
+				: `address ${addr}, port ${addr.port}`;
+			log.info('Listening on ' + bind);
 
 			done();
 		}
@@ -85,8 +117,8 @@ let vbexp = function(options) {
 				throw error;
 			}
 
-			var bind = typeof port === 'string'
-				? 'Pipe ' + port
+			var bind = (localpath)
+				? 'Pipe ' + localpath
 				: 'Port ' + port;
 
 			// handle specific listen errors with friendly messages
@@ -106,7 +138,10 @@ let vbexp = function(options) {
 		server.on('listening', onListening);
 
 		// Listen on provided port, on all network interfaces.
-		let instance = server.listen(port, host /* , TODO: CALLBACK */);
+		let instance = localpath
+			? server.listen(localpath)
+			: server.listen(port, host);
+
 		app.close = function() {
 			return instance.close.apply(instance, arguments);
 		};
