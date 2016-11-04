@@ -1,4 +1,6 @@
-## 0.2.7 / ????
+# CHANGELOG
+
+## 0.2.7 // 2016-11-04
 
 * Config: pretty JSON for dev-env
 * disable `x-powered-by`

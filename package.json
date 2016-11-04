@@ -1,6 +1,6 @@
 {
   "name": "@volebo/volebo-express",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "ExpressJS server for volebo.net",
   "main": "index.js",
   "scripts": {
