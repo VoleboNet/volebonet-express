@@ -117,7 +117,7 @@ let vbexp = function(options) {
 				throw error;
 			}
 
-			var bind = (localpath)
+			var bind = localpath
 				? 'Pipe ' + localpath
 				: 'Port ' + port;
 
