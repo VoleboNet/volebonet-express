@@ -44,6 +44,13 @@ describe('config', function(){
 			app = vbexpress();
 		});
 
+		it('server', () => {
+			assert.equal(app.config.server.host, '127.0.0.1');
+			assert.equal(app.config.server.port, 3000);
+			assert.property(app.config.server, 'path');
+			assert.isNull(app.config.server.path);
+		});
+
 		it('debug.renderStack', () =>
 			assert.equal(app.config.debug.renderStack, false)
 		);
