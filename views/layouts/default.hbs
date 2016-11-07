@@ -1,4 +1,4 @@
-{{!--
+{{~!--
 
 ExpressJS for volebo.net
 
@@ -18,12 +18,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 
---}}
+--~}}
 
-{{!--
+{{~!--
 	This is low-level service. So, basically it will return
 	just text, no HTML tags. This is why this layout is empty,
 	just BODY
---}}
+--~}}
 
-{{{body}}}
+<html lang="{{lang.code}}"><head><title>{{title}}</title><head>{{~!-- --~}}
+<body>
+	{{~{body}~}}
+</body>{{~!-- --~}}
+</html>
