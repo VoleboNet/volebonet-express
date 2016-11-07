@@ -36,6 +36,9 @@ cache:
   directories:
     - node_modules
 
+before_install:
+  - npm config set spin false
+
 #before_script:
 #  - npm install -g npm
 #  - npm install -g gulp
