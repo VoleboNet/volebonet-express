@@ -1,18 +1,10 @@
-<p align="center" >
-
 # volebo-express
-
-</p>
-
-<p align="center">
 
 [![Build Status](https://travis-ci.org/volebo/volebo-express.svg?branch=master)](https://travis-ci.org/volebo/volebo-express)
 [![codecov](https://codecov.io/gh/volebo/volebo-express/branch/master/graph/badge.svg)](https://codecov.io/gh/volebo/volebo-express)
 [![bitHound Overall Score](https://www.bithound.io/github/volebo/volebo-express/badges/score.svg)](https://www.bithound.io/github/volebo/volebo-express)
 [![bitHound Dependencies](https://www.bithound.io/github/volebo/volebo-express/badges/dependencies.svg)](https://www.bithound.io/github/volebo/volebo-express/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/volebo/volebo-express/badges/devDependencies.svg)](https://www.bithound.io/github/volebo/volebo-express/master/dependencies/npm)
-
-</p>
 
 Express JS server for Volebo.Net
 
