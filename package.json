@@ -42,7 +42,7 @@
   "homepage": "https://github.com/volebo/volebo-express",
   "dependencies": {
     "body-parser": "~1.15.1",
-    "debug": "~2.2.0",
+    "debug": "2.3.3",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
