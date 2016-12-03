@@ -26,10 +26,11 @@ var path       = require('path');
 /* ROOT of the package */
 var rt = process.cwd();
 
+var vbexpress = require(path.join(rt, ''));
+
 describe('server run and re-run', function(){
 
 	this.slow(800);
-	var vbexpress = require(path.join(rt, ''));
 	var app = vbexpress();
 
 	beforeEach(function(done) {
@@ -48,5 +49,14 @@ describe('server run and re-run', function(){
 		it(description, function () {
 			assert.isTrue(true);
 		});
+	});
+});
+
+describe('server properties', function(){
+	it('config', function () {
+		let app = vbexpress();
+
+		assert.isNotNull(app.config);
+		assert.isObject(app.config);
 	});
 });
