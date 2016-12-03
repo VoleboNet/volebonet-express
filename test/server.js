@@ -28,30 +28,6 @@ var rt = process.cwd();
 
 var vbexpress = require(path.join(rt, ''));
 
-describe('server run and re-run', function(){
-
-	this.slow(800);
-	var app = vbexpress();
-
-	beforeEach(function(done) {
-		app.start(done);
-	});
-
-	afterEach(function(done) {
-		app.close(done);
-	});
-
-	[
-		'run out of the box',
-		'should run after restart',
-	].forEach(function(description){
-
-		it(description, function () {
-			assert.isTrue(true);
-		});
-	});
-});
-
 describe('server properties', function(){
 	it('config', function () {
 		let app = vbexpress();

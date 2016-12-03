@@ -26,11 +26,51 @@ var path       = require('path');
 /* ROOT of the package */
 var rt = process.cwd();
 
-describe('index-tests', function(){
+let vbexpress = require(path.join(rt, ''));
+
+describe('module test', function(){
+
+	let configDefaultSock = {};
+	let configFileSock = {
+		"server": {
+			"path": "test.sock"
+		}
+	};
+
+	[
+		['default sock', configDefaultSock],
+		['file sock', configFileSock],
+	]
+	.forEach(config => {
+		let configName = config[0];
+		let configObj = config[1];
+
+		describe(`run and restart with config "${configName}"`, () => {
+			this.slow(800);
+			var app = vbexpress(configObj);
+
+			beforeEach(function(done) {
+				app.start(done);
+			});
+
+			afterEach(function(done) {
+				app.close(done);
+			});
+
+			[
+				'run out of the box',
+				'should run after restart',
+			].forEach(function(description){
+
+				it(description, function () {
+					assert.isTrue(true);
+				})
+			})
+		})
+	})
 
 	describe('on start two apps at the same time', () => {
 
-		let vbexpress = require(path.join(rt, ''));
 		let app1 = null;
 		let app2 = null;
 

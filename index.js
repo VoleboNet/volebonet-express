@@ -83,7 +83,7 @@ let vbexp = function(options) {
 				}
 			} catch (e) {
 				if (e.code === 'ENOENT' && e.syscall==='stat') {
-					// do nothing, localpaht-file does not exist
+					// do nothing, localpath-file does not exist
 				} else {
 					throw e;
 				}
@@ -103,7 +103,7 @@ let vbexp = function(options) {
 			var addr = server.address();
 			var bind = typeof addr === 'string'
 				? `pipe ${addr}`
-				: `address ${addr}, port ${addr.port}`;
+				: `address ${addr.address} port ${addr.port}`;
 			log.info('Listening on ' + bind);
 
 			done();
