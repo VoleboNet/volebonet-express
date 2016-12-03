@@ -5,6 +5,8 @@
 [![bitHound Overall Score](https://www.bithound.io/github/volebo/volebo-express/badges/score.svg)](https://www.bithound.io/github/volebo/volebo-express)
 [![bitHound Dependencies](https://www.bithound.io/github/volebo/volebo-express/badges/dependencies.svg)](https://www.bithound.io/github/volebo/volebo-express/master/dependencies/npm)
 [![bitHound Dev Dependencies](https://www.bithound.io/github/volebo/volebo-express/badges/devDependencies.svg)](https://www.bithound.io/github/volebo/volebo-express/master/dependencies/npm)
+[![npm version](https://img.shields.io/npm/v/@volebo/volebo-express.svg)](https://www.npmjs.com/package/@volebo/volebo-express)
+[![npm downloads](https://img.shields.io/npm/dm/@volebo/volebo-express.svg)](https://www.npmjs.com/package/@volebo/volebo-express)
 
 Express JS server for Volebo.Net
 
