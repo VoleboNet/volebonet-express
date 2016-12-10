@@ -63,8 +63,6 @@
     "eslint-config-volebo": "1.x",
     "gulp": "3.x",
     "gulp-eslint": "3.x",
-    "gulp-rename": "1.x",
-    "gulp-uglify": "2.x",
     "istanbul": "0.4.x",
     "mocha": "3.x",
     "supertest": "2.x"

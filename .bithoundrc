@@ -14,6 +14,12 @@
 
 	"dependencies": {
 		"unused-ignores": [
+			"gulp-eslint",
+			"gulp",
+			"mocha",
+			"istanbul",
+			"eslint-config-volebo",
+			"eslint"
 		]
 	}
 }
