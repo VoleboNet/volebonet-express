@@ -27,12 +27,12 @@ node_js:
 #  global:
 #    - NODE_ENV=dev
 
-matrix:
-  include:
-    - node_js: 4
-      env: WITHTESTS=1
-#  allow_failures:
-#    - node_js: 4
+#matrix:
+  # include:
+  #   - node_js: 4
+  #     env: WITHTESTS=1
+  # allow_failures:
+  #   - node_js: 4
 
 cache:
   directories:
@@ -53,7 +53,7 @@ install:
 script:
 # - gulp build
   - npm run lint
-  - if [ $WITHTESTS ]; then npm test; fi
+  - npm test
   - npm run coverage
   - bithound check git@github.com:volebo/volebo-express.git
 
