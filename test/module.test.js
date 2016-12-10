@@ -23,10 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 var assert     = require('chai').assert;
 var path       = require('path');
 
-/* ROOT of the package */
-var rt = process.cwd();
-
-let vbexpress = require(path.join(rt, ''));
+let vbexpress = require(path.join(packageRoot, ''));
 
 describe('module test', function(){
 

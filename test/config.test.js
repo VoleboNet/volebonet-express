@@ -24,10 +24,7 @@ const assert = require('chai').assert;
 const _      = require('lodash');
 const path   = require('path');
 
-/* ROOT of the package */
-const rt = process.cwd();
-
-const vbexpress = require(path.join(rt, ''));
+const vbexpress = require(path.join(packageRoot, ''));
 
 describe('config', function(){
 

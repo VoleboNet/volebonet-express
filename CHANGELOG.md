@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## 0.2.9 // 2016-12-10
+
+* use helmet
+* better main contructor
+* better NODE_ENV handling
+* set `trust proxy`
+* reorganize tests
+
+* fix #12
+* fix #9
+* fix #16
+
 ## 0.2.8 // 2016-12-03
 
 * set timezone to **UTC** for `knex` in the `config`

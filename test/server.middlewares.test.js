@@ -23,9 +23,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 //var assert     = require('chai').assert;
 const request  = require('supertest');
 
-/* ROOT of the package */
-var rt = process.cwd();
-var vbexpress = require(rt);
+var vbexpress = require(packageRoot);
 
 describe('server-middlewares', function(){
 

@@ -1,3 +1,10 @@
 --reporter list
 --reporter spec
 --recursive
+--recursive
+--check-leaks
+--ui bdd
+--require test/bootstrap
+test/**/*.test.js
+
+
