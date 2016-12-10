@@ -83,7 +83,7 @@ All thanks and praises goes to:
 
 ## License
 
-Please, follow the link: [LICENSE](LICENSE)
+Please, follow the link: [LICENSE](https://github.com/volebo/volebo-express/raw/master/LICENSE)
 
 [express-mw-lang]: ../../../express-mw-lang
 [express-hbs-helpers]: https://www.npmjs.com/package/express-handlebars#helpers-1
