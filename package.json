@@ -61,7 +61,7 @@
     "chai": "3.x",
     "eslint": "3.x",
     "eslint-config-volebo": "1.x",
-    "gulp": "^.x",
+    "gulp": "3.x",
     "gulp-eslint": "3.x",
     "gulp-rename": "1.x",
     "gulp-uglify": "2.x",
