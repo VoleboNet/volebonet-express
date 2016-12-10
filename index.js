@@ -28,7 +28,7 @@ const http            = require('http');
 const express         = require('express');
 
 const Config          = require('./lib/config');
-const createServer    = require('./lib/server');
+const createListener  = require('./lib/server');
 
 // TODO : #2 use LOGGER!!!
 // BUG: #2
@@ -36,7 +36,6 @@ const log             = console;
 
 let deprecated_error_die = function(done, msg) {
 	var e = new Error(msg);
-
 	done(e);
 }
 
@@ -48,7 +47,7 @@ EXPORT
 
 let vbexp = function(options) {
 
-	let app = createServer(options);
+	let app = createListener(options);
 
 	app.start = function app_start(done)
 	{
@@ -67,7 +66,9 @@ let vbexp = function(options) {
 		let port = app.config.server.port;
 		let localpath = app.config.server.path;
 
-		if (localpath) {
+		let useLocalPath = !! localpath;
+
+		if (useLocalPath) {
 			debug('will listen on localpath');
 			host = null;
 			port = null;
@@ -117,7 +118,7 @@ let vbexp = function(options) {
 				throw error;
 			}
 
-			var bind = localpath
+			var bind = useLocalPath
 				? 'Pipe ' + localpath
 				: 'Port ' + port;
 
@@ -138,12 +139,14 @@ let vbexp = function(options) {
 		server.on('listening', onListening);
 
 		// Listen on provided port, on all network interfaces.
-		let instance = localpath
-			? server.listen(localpath)
-			: server.listen(port, host);
+		if(useLocalPath) {
+			server.listen(localpath)
+		} else {
+			server.listen(port, host)
+		}
 
 		app.close = function() {
-			return instance.close.apply(instance, arguments);
+			return server.close.apply(server, arguments);
 		};
 
 		return;

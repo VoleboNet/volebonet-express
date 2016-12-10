@@ -20,13 +20,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
 
-var assert = require('chai').assert;
-var path   = require('path');
+const assert = require('chai').assert;
+const _      = require('lodash');
+const path   = require('path');
 
 /* ROOT of the package */
-var rt = process.cwd();
+const rt = process.cwd();
 
-var vbexpress = require(path.join(rt, ''));
+const vbexpress = require(path.join(rt, ''));
 
 describe('config', function(){
 
@@ -43,19 +44,20 @@ describe('config', function(){
 			['auth.enabled', true],
 			['model.enabled', false],
 			['model.db.timezone', 'utc'],
+
+			['session.domain', [] ],
+			['proxy.list', ['loopback']]
 		]
 		.forEach( pair => {
 			let prop = pair[0];
-			let val = pair[1];
-			it(`-> ${prop}`, ()=> {
-				assert.deepProperty(config, prop, 'config does not contain expected property');
-				assert.deepPropertyVal(config, prop, val, 'property in config has incorect value');
-			})
-		})
+			let exp = pair[1];
 
-		it('session.domain', () => {
-			assert.isArray(config.session.domain);
-			assert.lengthOf(config.session.domain, 0);
+			it(`-> ${prop} should have known value`, ()=> {
+				assert.deepProperty(config, prop, 'config does not contain expected property');
+
+				let act = _.get(config, prop);
+				assert.deepEqual(act, exp, 'property in config has incorect value');
+			});
 		});
 	});
 

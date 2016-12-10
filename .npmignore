@@ -14,3 +14,6 @@ HEADER
 .node-inspectorrc
 .travis.yml
 gulpfile.js
+
+CHANGELOG.md
+README.md
