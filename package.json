@@ -60,7 +60,7 @@
   "devDependencies": {
     "chai": "3.x",
     "eslint": "3.x",
-    "eslint-config-volebo": "1.x",
+    "eslint-config-volebo": "x",
     "gulp": "3.x",
     "gulp-eslint": "3.x",
     "istanbul": "0.4.x",

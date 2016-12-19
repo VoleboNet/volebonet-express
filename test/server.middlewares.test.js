@@ -94,7 +94,7 @@ describe('server-middlewares', function(){
 
 			app.config.debug.renderStack = true;
 
-			app.get('/renderNullOptions', (req, res, next) => {
+			app.get('/renderNullOptions', (_unused_req, res, next) => {
 				let optionsAndContext = null;
 				return res.render('error', optionsAndContext);
 			});
