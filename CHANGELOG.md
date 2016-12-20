@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## unpublished
+
+* new eslint-rules
+* simplified get-node-env scripts (removed `lodash` dep)
+
 ## 0.2.9 // 2016-12-10
 
 * use helmet

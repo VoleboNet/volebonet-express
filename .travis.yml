@@ -55,7 +55,7 @@ script:
   - npm run lint
   - npm test
   - npm run coverage
-  - bithound check git@github.com:volebo/volebo-express.git
+  - bithound check git@github.com:$TRAVIS_REPO_SLUG.git
 
 after_success:
   - codecov
