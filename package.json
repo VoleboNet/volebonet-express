@@ -42,7 +42,7 @@
   "homepage": "https://github.com/volebo/volebo-express",
   "dependencies": {
     "body-parser": "~1.15.1",
-    "debug": "2.3.3",
+    "debug": "2.3.x",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-handlebars": "^3.0.0",
@@ -61,8 +61,6 @@
     "chai": "3.x",
     "eslint": "3.x",
     "eslint-config-volebo": "x",
-    "gulp": "3.x",
-    "gulp-eslint": "3.x",
     "istanbul": "0.4.x",
     "mocha": "3.x",
     "supertest": "2.x"
