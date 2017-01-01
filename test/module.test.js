@@ -1,8 +1,8 @@
 /*
 ExpressJS for volebo.net
 
-Copyright (C) 2016	Volebo.Net <volebo.net@gmail.com>
-Copyright (C) 2016	Koryukov Maksim <maxkoryukov@gmail.com>
+Copyright (C) 2016-2017 Volebo <dev@volebo.net>
+Copyright (C) 2016-2017 Koryukov Maksim <maxkoryukov@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,16 +18,13 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-"use strict";
+'use strict'
 
-var assert     = require('chai').assert;
-var path       = require('path');
-
-let vbexpress = require(path.join(packageRoot, ''));
+const vbexpress = require(packageRoot)
 
 describe('module test', function(){
 
-	let configDefaultSock = {};
+	let configDefaultSock = {}
 	let configFileSock = {
 		"server": {
 			"path": "test.sock"
@@ -37,14 +34,13 @@ describe('module test', function(){
 	[
 		['default sock', configDefaultSock],
 		['file sock', configFileSock],
-	]
-	.forEach(config => {
-		let configName = config[0];
-		let configObj = config[1];
+	].forEach(config => {
+		let configName = config[0]
+		let configObj = config[1]
 
 		describe(`run and restart with config "${configName}"`, () => {
 			this.slow(800);
-			var app = vbexpress(configObj);
+			const app = vbexpress(configObj);
 
 			beforeEach(function(done) {
 				app.start(done);
@@ -60,7 +56,7 @@ describe('module test', function(){
 			].forEach(function(description){
 
 				it(description, function () {
-					assert.isTrue(true);
+					expect(true).is.true;
 				})
 			})
 		})
@@ -84,9 +80,9 @@ describe('module test', function(){
 		it('should call done with ERROR', done => {
 
 			let errDone = function(err) {
-				assert.isNotNull(err);
-				assert.property(err, 'message');
-				assert.match(err.message, /Port \d+ is already in use/i );
+				expect(err).is.not.null
+				expect(err).has.property('message')
+				expect(err.message).is.match(/Port \d+ is already in use/i)
 
 				done();
 			};

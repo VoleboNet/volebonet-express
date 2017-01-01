@@ -1,8 +1,8 @@
 /*
 ExpressJS for volebo.net
 
-Copyright (C) 2016	Volebo.Net <volebo.net@gmail.com>
-Copyright (C) 2016	Koryukov Maksim <maxkoryukov@gmail.com>
+Copyright (C) 2016-2017 Volebo <dev@volebo.net>
+Copyright (C) 2016-2017 Koryukov Maksim <maxkoryukov@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -18,12 +18,10 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-"use strict";
+'use strict'
 
-//var assert     = require('chai').assert;
-const request  = require('supertest');
-
-var vbexpress = require(packageRoot);
+const request  = require('supertest')
+const vbexpress = require(packageRoot)
 
 describe('server-middlewares', function(){
 

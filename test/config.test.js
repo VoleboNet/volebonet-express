@@ -1,8 +1,8 @@
 /*
 ExpressJS for volebo.net
 
-Copyright (C) 2016	Volebo.Net <volebo.net@gmail.com>
-Copyright (C) 2016	Koryukov Maksim <maxkoryukov@gmail.com>
+Copyright (C) 2016-2017 Volebo <dev@volebo.net>
+Copyright (C) 2016-2017 Koryukov Maksim <maxkoryukov@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ const assert = require('chai').assert;
 const _      = require('lodash');
 const path   = require('path');
 
-const vbexpress = require(path.join(packageRoot, ''));
+const vbexpress = require(packageRoot);
 
 describe('config', function(){
 
