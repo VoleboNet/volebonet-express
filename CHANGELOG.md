@@ -2,6 +2,10 @@
 
 ## unreleased
 
+## 0.3.1
+
+* autopublish from travis
+
 ## 0.3.0
 
 * new eslint-rules
