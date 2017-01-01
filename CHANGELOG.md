@@ -1,9 +1,13 @@
 # CHANGELOG
 
-## unpublished
+## unreleased
+
+## 0.3.0
 
 * new eslint-rules
 * simplified get-node-env scripts (removed `lodash` dep)
+* change copyright years
+* stub for helpers (see #17)
 
 ## 0.2.9 // 2016-12-10
 
