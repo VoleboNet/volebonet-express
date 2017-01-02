@@ -20,34 +20,32 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
 
-const path            = require('path');
+const path            = require('path')
 
-const debug           = require('debug')('volebo:express:server');
-const express         = require('express');
-// #2
-//const logger          = require('express-bunyan-logger');
-const logger          = require('morgan');
-
-const bodyParser      = require('body-parser');
-const handlebars      = require('express-handlebars');
-
-const session         = require('express-session');
-const langGen         = require('express-mw-lang');
-const _               = require('lodash');
-
-const moment          = require('moment');
-const passport        = require('passport');
+const debug           = require('debug')('volebo:express:server')
+const express         = require('express')
 
 const helmet          = require('helmet')
+// #2
+//const logger          = require('express-bunyan-logger');
+const logger          = require('morgan')
+
+const bodyParser      = require('body-parser')
+const handlebars      = require('express-handlebars')
+
+const session         = require('express-session')
+const langGen         = require('express-mw-lang')
+const _               = require('lodash')
+const moment          = require('moment')
 
 // Loading polyfill for intl
 // required, as soon we want to use several locales (not only EN)
 if (global.Intl) {
-	const IntlPolyfill = require('intl');
-	Intl.NumberFormat   = IntlPolyfill.NumberFormat;
-	Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+	const IntlPolyfill = require('intl')
+	Intl.NumberFormat   = IntlPolyfill.NumberFormat
+	Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
 } else {
-	global.Intl = require('intl');
+	global.Intl = require('intl')
 }
 
 // TODO : #17 replace with custom set of handlers!
@@ -60,7 +58,6 @@ debug('NODE_ENV', nodeEnv);
 const Config          = require('./config');
 
 debug('initializing');
-
 
 let main = function main(serverConfig) {
 	let app = express();
@@ -159,18 +156,23 @@ let main = function main(serverConfig) {
 	========================================================
 	*/
 
+	app.passport = null
+
 	if (app.config.auth.enabled) {
-		app.use(passport.initialize());
+
+		app.passport = require('passport')
+		app.use(app.passport.initialize())
+
 		if (app.config.auth.session){
-			app.use(passport.session());
+			app.use(app.passport.session());
 		}
 
-		passport.serializeUser(function(user, done) {
+		app.passport.serializeUser(function(user, done) {
 			debug('serializing', user);
 			done(null, user);
 		});
 
-		passport.deserializeUser(function(obj, done) {
+		app.passport.deserializeUser(function(obj, done) {
 			debug('deserializing', obj);
 			done(null, obj);
 		});
@@ -226,8 +228,13 @@ let main = function main(serverConfig) {
 			}
 		}
 	});
-	app.lang = langmw;
-	langmw.esu(app);
+	app.lang = langmw
+
+	app.lang.loadTranslation = function(json) {
+		_.set(app, 'localization.en', json)
+	}
+
+	langmw.esu(app)
 
 	/*
 	========================================================
@@ -235,29 +242,30 @@ let main = function main(serverConfig) {
 	========================================================
 	*/
 	let hbs  = handlebars.create({
-		layoutsDir: path.join(__dirname, '..', 'views', 'layouts'),
-		partialsDir: path.join(__dirname, '..', 'views', 'partials'),		// TODO : #13 use NAMESPACES
+		layoutsDir: path.join(__dirname, 'views', 'layouts'),
+		partialsDir: path.join(__dirname, 'views', 'partials'),		// TODO : #13 use NAMESPACES
 		defaultLayout: 'default',
-		helpers: require('./helpers').helpers,	// TODO : #17 remove this: require('./views/helpers'),
+		helpers: require('./views/helpers')(app),
 		extname: '.hbs'
-	});
-	app.hbs = hbs;
+	})
+	app.set('views', path.join(__dirname, 'views'))
+	app.hbs = hbs
 
-	handlebarsIntl.registerWith(hbs.handlebars);
+	handlebarsIntl.registerWith(hbs.handlebars)
 
-	app.engine('hbs', hbs.engine);
-	app.set('view engine', 'hbs');
+	app.engine('hbs', hbs.engine)
+	app.set('view engine', 'hbs')
 
 	/*
 	========================================================
 	AUTOLOAD MODEL
 	========================================================
 	*/
-	if (app.config.model.enabled) {
+	if (app.config.db.enabled) {
 		// require here.
 		// add VOLEBO-DATA dependency only when it is required
 		const Model = require('volebo-data');
-		app.model = new Model(app.config.model);
+		app.model = new Model(app.config.db);
 	}
 
 	app._onStarting = function() {
@@ -269,11 +277,11 @@ let main = function main(serverConfig) {
 		*/
 		app.use(function(_unused_req, _unused_res, next) {
 			// TODO : pass required info to the error, such as URL, params...
-			let err = new Error('Not Found');
-			err.status = 404;
+			let err = new Error('Not Found')
+			err.status = 404
 
-			next(err);
-		});
+			next(err)
+		})
 
 		/*
 		====================================
@@ -282,32 +290,35 @@ let main = function main(serverConfig) {
 		====================================
 		*/
 
-		let error_view_path = path.join(__dirname, '..', 'views', 'error.hbs');
+		let errorViewPath = path.join(__dirname, 'views', 'error.hbs')
+		let errorLayoutlPath = path.join(__dirname, 'views', 'layouts', 'default.hbs')
 
 		if (app.config.debug && app.config.debug.renderStack && !isProduction) {
 
 			// development error handler
 			// will print stacktrace
 			app.use(function global_error_dev(err, _unused_req, res, next) {
-				res.status(err.status || 500);
-				return res.render(error_view_path, {
+				res.status(err.status || 500)
+				return res.render(errorViewPath, {
 					message: err.message,
 					error: err,
-					status: err.status
-				});
-			});
+					status: err.status,
+					layout: errorLayoutlPath
+				})
+			})
 		} else {
 
 			// production error handler
 			// no stacktraces leaked to user
 			app.use(function global_error(err, _unused_req, res, next) {
-				res.status(err.status || 500);
-				return res.render(error_view_path, {
+				res.status(err.status || 500)
+				return res.render(errorViewPath, {
 					message: err.message,
 					error: {},
-					status: err.status
-				});
-			});
+					status: err.status,
+					layout: errorLayoutlPath
+				})
+			})
 		}
 	}
 

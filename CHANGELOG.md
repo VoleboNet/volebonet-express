@@ -2,6 +2,13 @@
 
 ## unreleased
 
+* CONFIG: renaming: `model.db` => `db.connection`
+* new field for app: `app.passport`
+* I18N: `app.lang.loadTranslation` - for loading translations to App memory
+* HBS: move views to new folder
+* HBS: reorganize helpers (init through function)
+* ERROR handling: fixed bug with unaccessible layout for error-rendering
+
 ## 0.3.1
 
 * autopublish from travis

@@ -60,10 +60,12 @@ let config = function config(options) {
 			"list": ["loopback"]
 		},
 
-		"model": {
+		"db": {
 			"enabled": false,
+			"debug": false,
+			"client": "mysql",
 
-			"db" : {
+			"connection" : {
 				"timezone" : "utc",
 				"username" : "",
 				"password" : "",
@@ -82,8 +84,8 @@ let config = function config(options) {
 /**
  * Read object from JSON-file synchronously
  *
- * @param {path} filename - path to the file
- * @return {object}
+ * @param  {string}      filename     path to the file
+ * @return {Object}
  */
 config.readJson = function(filename) {
 	return JSON.parse(fs.readFileSync(filename, 'utf8'));
@@ -92,8 +94,8 @@ config.readJson = function(filename) {
 /**
  * Read object from YAML-file synchronously
  *
- * @param {path} filename - path to the file
- * @return {object}
+ * @param  {string}      filename     path to the file
+ * @return {Object}
  */
 config.readYaml = function(filename) {
 	return yaml.load(fs.readFileSync(filename, 'utf8'));

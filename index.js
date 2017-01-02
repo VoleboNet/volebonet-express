@@ -62,9 +62,13 @@ let vbexp = function(options) {
 		app._onStarting();
 
 		// Get port from environment and store in Express.
-		let host = app.config.server.host;
-		let port = app.config.server.port;
-		let localpath = app.config.server.path;
+		let host = app.config.server.host
+		let port = app.config.server.port
+		let localpath = app.config.server.path
+
+		debug('host', host)
+		debug('port', port)
+		debug('localpath', localpath)
 
 		let useLocalPath = !! localpath;
 

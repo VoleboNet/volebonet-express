@@ -20,8 +20,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use strict'
 
-exports.helpers = {
-	__(key) {
-		return key
+const _               = require('lodash');
+
+
+// TODO : #17 remove this: require('./views/helpers'),
+module.exports = function(app) {
+	const helpers = {
+		__(key) {
+			// stupidiest way to support translations
+			return _.get(app.localization, 'en.' + key, key)
+		}
 	}
+
+	return helpers
 }

@@ -39,8 +39,10 @@ describe('config', function(){
 			['debug.renderStack', false],
 			['session.secure', false],
 			['auth.enabled', true],
-			['model.enabled', false],
-			['model.db.timezone', 'utc'],
+			['db.enabled', false],
+			['db.debug', false],
+			['db.client', 'mysql'],
+			['db.connection.timezone', 'utc'],
 
 			['session.domain', [] ],
 			['proxy.list', ['loopback']]
@@ -64,16 +66,16 @@ describe('config', function(){
 				"debug": {
 					"renderStack": true,
 				},
-				"model": {
-					"db": {
+				"db": {
+					"connection": {
 						"username": "anon"
 					}
 				}
 			})
 
 			assert.deepPropertyVal(config, 'debug.renderStack', true);
-			assert.deepPropertyVal(config, 'model.db.username', 'anon');
-			assert.deepPropertyVal(config, 'model.db.timezone', 'utc');
+			assert.deepPropertyVal(config, 'db.connection.username', 'anon');
+			assert.deepPropertyVal(config, 'db.connection.timezone', 'utc');
 		});
 	})
 
