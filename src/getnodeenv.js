@@ -41,6 +41,6 @@ exports = module.exports = function getEnv() {
 		env = _d;
 	}
 
-	let isProduction = env === _p;
+	const isProduction = env === _p;
 	return [env, isProduction];
 }

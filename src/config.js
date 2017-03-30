@@ -26,12 +26,12 @@ const fs              = require('fs');
 const _               = require('lodash');
 const yaml            = require('js-yaml');
 
-let config = function config(options) {
+const config = function config(options) {
 	if (_.isNil(options)) {
 		options = {};
 	}
 
-	let def = {
+	const def = {
 		"server": {
 			"host": "127.0.0.1",
 			"port": 3000,

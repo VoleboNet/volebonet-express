@@ -24,8 +24,8 @@ const vbexpress = require(packageRoot)
 
 describe('module test', function(){
 
-	let configDefaultSock = {}
-	let configFileSock = {
+	const configDefaultSock = {}
+	const configFileSock = {
 		"server": {
 			"path": "test.sock"
 		}
@@ -35,8 +35,8 @@ describe('module test', function(){
 		['default sock', configDefaultSock],
 		['file sock', configFileSock],
 	].forEach(config => {
-		let configName = config[0]
-		let configObj = config[1]
+		const configName = config[0]
+		const configObj = config[1]
 
 		describe(`run and restart with config "${configName}"`, () => {
 			this.slow(800);
@@ -79,7 +79,7 @@ describe('module test', function(){
 
 		it('should call done with ERROR', done => {
 
-			let errDone = function(err) {
+			const errDone = function(err) {
 				expect(err).is.not.null
 				expect(err).has.property('message')
 				expect(err.message).is.match(/Port \d+ is already in use/i)

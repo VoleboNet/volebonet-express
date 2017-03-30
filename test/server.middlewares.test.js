@@ -27,7 +27,7 @@ describe('server-middlewares', function(){
 
 	describe('check NOT FOUND', () => {
 
-		var app = vbexpress();
+		const app = vbexpress();
 
 		before( done=> {
 			app.start(done);
@@ -44,7 +44,7 @@ describe('server-middlewares', function(){
 
 	describe('check "forwardedSecure"', () => {
 
-		var app = vbexpress();
+		const app = vbexpress();
 
 		before( done=> {
 			app.get('/forwardedSecure', (req, res, next) => {
@@ -79,7 +79,7 @@ describe('server-middlewares', function(){
 
 	describe('check "onLangCodeReady"', () => {
 
-		var app = null;
+		let app = null;
 
 		beforeEach(() => {
 			app = vbexpress();
@@ -93,7 +93,7 @@ describe('server-middlewares', function(){
 			app.config.debug.renderStack = true;
 
 			app.get('/renderNullOptions', (_unused_req, res, next) => {
-				let optionsAndContext = null;
+				const optionsAndContext = null;
 				return res.render('error', optionsAndContext);
 			});
 

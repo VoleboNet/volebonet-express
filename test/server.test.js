@@ -24,7 +24,7 @@ const vbexpress = require(packageRoot)
 
 describe('server properties', function(){
 	it('config', function () {
-		let app = vbexpress()
+		const app = vbexpress()
 
 		expect(app.config).is.not.null
 		expect(app.config).is.an('object')

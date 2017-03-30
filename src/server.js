@@ -59,8 +59,8 @@ const Config          = require('./config');
 
 debug('initializing');
 
-let main = function main(serverConfig) {
-	let app = express();
+const main = function main(serverConfig) {
+	const app = express();
 
 	// securing with HTTP-headers
 	app.use(helmet());
@@ -93,7 +93,7 @@ let main = function main(serverConfig) {
 
 	if (_.get(app.config, 'debug.staticPath') && !isProduction) {
 		//let staticPath = path.join(__dirname, app.config.debug.staticPath);
-		let staticPath = app.config.debug.staticPath;
+		const staticPath = app.config.debug.staticPath;
 
 		debug('Use static path', staticPath);
 		app.use(express.static(staticPath));
@@ -126,7 +126,7 @@ let main = function main(serverConfig) {
 	*/
 
 	if (app.config.session && app.config.session.enabled) {
-		let session_config = {
+		const session_config = {
 			name: app.config.session.name || 'sessionId',
 			secret: app.config.session.secret,
 			resave: false,
@@ -184,7 +184,7 @@ let main = function main(serverConfig) {
 	========================================================
 	*/
 
-	let langmw = langGen({
+	const langmw = langGen({
 		defaultLanguage: 'en',
 		availableLanguages: ['en', 'ru', 'zh'],
 		onLangCodeReady: function(lang_code, _unused_req, res) {
@@ -202,7 +202,7 @@ let main = function main(serverConfig) {
 			}
 			res.render = function overloadedRender(){
 
-				let nargs = Array.prototype.slice.call(arguments);
+				const nargs = Array.prototype.slice.call(arguments);
 				let opt = nargs[1];
 
 				if (_.isNil(opt)) {
@@ -241,7 +241,7 @@ let main = function main(serverConfig) {
 	VIEW ENGINE SETUP
 	========================================================
 	*/
-	let hbs  = handlebars.create({
+	const hbs  = handlebars.create({
 		layoutsDir: path.join(__dirname, 'views', 'layouts'),
 		partialsDir: path.join(__dirname, 'views', 'partials'),		// TODO : #13 use NAMESPACES
 		defaultLayout: 'default',
@@ -277,7 +277,7 @@ let main = function main(serverConfig) {
 		*/
 		app.use(function(_unused_req, _unused_res, next) {
 			// TODO : pass required info to the error, such as URL, params...
-			let err = new Error('Not Found')
+			const err = new Error('Not Found')
 			err.status = 404
 
 			next(err)
@@ -290,8 +290,8 @@ let main = function main(serverConfig) {
 		====================================
 		*/
 
-		let errorViewPath = path.join(__dirname, 'views', 'error.hbs')
-		let errorLayoutlPath = path.join(__dirname, 'views', 'layouts', 'default.hbs')
+		const errorViewPath = path.join(__dirname, 'views', 'error.hbs')
+		const errorLayoutlPath = path.join(__dirname, 'views', 'layouts', 'default.hbs')
 
 		if (app.config.debug && app.config.debug.renderStack && !isProduction) {
 

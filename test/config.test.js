@@ -30,7 +30,7 @@ describe('config', function(){
 
 	describe('default values', function() {
 
-		let config = new vbexpress.Config();
+		const config = new vbexpress.Config();
 
 		[
 			['server.host', '127.0.0.1'],
@@ -48,13 +48,13 @@ describe('config', function(){
 			['proxy.list', ['loopback']]
 		]
 		.forEach( pair => {
-			let prop = pair[0];
-			let exp = pair[1];
+			const prop = pair[0];
+			const exp = pair[1];
 
 			it(`-> ${prop} should have known value`, ()=> {
 				assert.deepProperty(config, prop, 'config does not contain expected property');
 
-				let act = _.get(config, prop);
+				const act = _.get(config, prop);
 				assert.deepEqual(act, exp, 'property in config has incorect value');
 			});
 		});
@@ -62,7 +62,7 @@ describe('config', function(){
 
 	describe('config with custom values', function() {
 		it('override config 1', () => {
-			let config = new vbexpress.Config({
+			const config = new vbexpress.Config({
 				"debug": {
 					"renderStack": true,
 				},
@@ -82,7 +82,7 @@ describe('config', function(){
 	describe('static methods', function() {
 		describe('readJson', () => {
 			it('reads json', () => {
-				let json = vbexpress.Config.readJson(path.join(__dirname, 'samples', 'config-readJson-01.json'));
+				const json = vbexpress.Config.readJson(path.join(__dirname, 'samples', 'config-readJson-01.json'));
 
 				assert.deepEqual(json, {'key': '12_12'});
 			});
@@ -91,7 +91,7 @@ describe('config', function(){
 
 		describe('readYaml', () => {
 			it('reads yaml', () => {
-				let yaml = vbexpress.Config.readYaml(path.join(__dirname, 'samples', 'config-readYaml-01.yaml'));
+				const yaml = vbexpress.Config.readYaml(path.join(__dirname, 'samples', 'config-readYaml-01.yaml'));
 
 				assert.deepEqual(yaml,
 					{ "json": ["rigid"], "object": { "key": "value", "array": [ { "null_value": null }, { "boolean": true }, { "integer": 1 }]}}

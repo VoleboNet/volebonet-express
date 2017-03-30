@@ -34,8 +34,8 @@ const createListener  = require('./src/server');
 // BUG: #2
 const log             = console;
 
-let deprecated_error_die = function(done, msg) {
-	var e = new Error(msg);
+const deprecated_error_die = function(done, msg) {
+	const e = new Error(msg);
 	done(e);
 }
 
@@ -45,9 +45,9 @@ EXPORT
 ====================================
 */
 
-let vbexp = function(options) {
+const vbexp = function(options) {
 
-	let app = createListener(options);
+	const app = createListener(options);
 
 	app.start = function app_start(done)
 	{
@@ -70,7 +70,7 @@ let vbexp = function(options) {
 		debug('port', port)
 		debug('localpath', localpath)
 
-		let useLocalPath = !! localpath;
+		const useLocalPath = !! localpath;
 
 		if (useLocalPath) {
 			debug('will listen on localpath');
@@ -78,7 +78,7 @@ let vbexp = function(options) {
 			port = null;
 
 			try {
-				let stat = fs.statSync(localpath);
+				const stat = fs.statSync(localpath);
 				if (stat.isSocket()) {
 					debug('remove existing socket file', localpath);
 
@@ -99,14 +99,14 @@ let vbexp = function(options) {
 		}
 
 		// Create HTTP server.
-		let server = http.createServer(app);
+		const server = http.createServer(app);
 
 		/**
 		 * Event listener for HTTP server "listening" event.
 		 */
-		let onListening = function onListening() {
-			var addr = server.address();
-			var bind = typeof addr === 'string'
+		const onListening = function onListening() {
+			const addr = server.address();
+			const bind = typeof addr === 'string'
 				? `pipe ${addr}`
 				: `address ${addr.address} port ${addr.port}`;
 			log.info('Listening on ' + bind);
@@ -114,7 +114,7 @@ let vbexp = function(options) {
 			done();
 		}
 
-		let onError = function onError(error) {
+		const onError = function onError(error) {
 
 			// TODO : #2 handle errors and write to the error log!!
 
@@ -122,7 +122,7 @@ let vbexp = function(options) {
 				throw error;
 			}
 
-			var bind = useLocalPath
+			const bind = useLocalPath
 				? 'Pipe ' + localpath
 				: 'Port ' + port;
 

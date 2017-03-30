@@ -36,7 +36,7 @@ describe('getnodeenv', () => {
 			it(`should recognize ${envname}`, function () {
 				process.env['NODE_ENV'] = envname;
 
-				let [e, isP] = getnodeenv();
+				const [e, isP] = getnodeenv();
 
 				expect(isP).to.be.true;
 				expect(e).is.equal('production');
@@ -52,7 +52,7 @@ describe('getnodeenv', () => {
 			it(`should recognize ${envname}`, function () {
 				process.env['NODE_ENV'] = envname;
 
-				let [e, isP] = getnodeenv();
+				const [e, isP] = getnodeenv();
 
 				expect(isP).to.be.false;
 				expect(e).is.equal('development');
@@ -76,7 +76,7 @@ describe('getnodeenv', () => {
 			it(`should set 'development' for ${envname}`, function () {
 				process.env['NODE_ENV'] = envname;
 
-				let [e, isP] = getnodeenv();
+				const [e, isP] = getnodeenv();
 
 				expect(isP).to.be.false;
 				expect(e).is.equal('development');
