@@ -18,13 +18,22 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-"use strict";
+'use strict'
+
+// Loading polyfill for intl
+// required, as soon we want to use several locales (not only EN)
+if (global.Intl) {
+	const IntlPolyfill = require('intl')
+	Intl.NumberFormat   = IntlPolyfill.NumberFormat
+	Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
+} else {
+	global.Intl = require('intl')
+}
 
 const path            = require('path')
 
 const debug           = require('debug')('volebo:express:server')
 const express         = require('express')
-
 const helmet          = require('helmet')
 // #2
 //const logger          = require('express-bunyan-logger');
@@ -37,16 +46,6 @@ const session         = require('express-session')
 const langGen         = require('express-mw-lang')
 const _               = require('lodash')
 const moment          = require('moment')
-
-// Loading polyfill for intl
-// required, as soon we want to use several locales (not only EN)
-if (global.Intl) {
-	const IntlPolyfill = require('intl')
-	Intl.NumberFormat   = IntlPolyfill.NumberFormat
-	Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat
-} else {
-	global.Intl = require('intl')
-}
 
 // TODO : #17 replace with custom set of handlers!
 // BUG: #17
