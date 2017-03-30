@@ -20,23 +20,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
 
-require('dotenv').config({ silent: true });
+require('dotenv').config({ silent: true })
 
-const debug           = require('debug')('volebo:express');
-const fs              = require('fs');
-const http            = require('http');
-const express         = require('express');
+const debug           = require('debug')('volebo:express')
+const fs              = require('fs')
+const http            = require('http')
+const express         = require('express')
 
-const Config          = require('./src/config');
-const createListener  = require('./src/server');
+const createListener  = require('./src/server')
 
 // TODO : #2 use LOGGER!!!
 // BUG: #2
 const log             = console;
 
 const deprecated_error_die = function(done, msg) {
-	const e = new Error(msg);
-	done(e);
+	const e = new Error(msg)
+	done(e)
 }
 
 /*
@@ -45,9 +44,9 @@ EXPORT
 ====================================
 */
 
-const vbexp = function(options) {
+const vbexp = function(configPath) {
 
-	const app = createListener(options);
+	const app = createListener(configPath)
 
 	app.start = function app_start(done)
 	{
@@ -59,7 +58,7 @@ const vbexp = function(options) {
 			}
 		}
 		// append error handlers:
-		app._onStarting();
+		app._onStarting()
 
 		// Get port from environment and store in Express.
 		let host = app.config.server.host
@@ -162,7 +161,5 @@ const vbexp = function(options) {
 vbexp.Router = function vbexp_Router() {
 	return express.Router.apply(express, arguments);
 }
-
-vbexp.Config = Config;
 
 exports = module.exports = vbexp;

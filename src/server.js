@@ -28,7 +28,7 @@ const express         = require('express')
 const helmet          = require('helmet')
 // #2
 //const logger          = require('express-bunyan-logger');
-const logger          = require('morgan')
+const wwwLogger       = require('morgan')
 
 const bodyParser      = require('body-parser')
 const handlebars      = require('express-handlebars')
@@ -55,11 +55,15 @@ const handlebarsIntl  = require('handlebars-intl');
 const [nodeEnv, isProduction] = require('./getnodeenv')();
 debug('NODE_ENV', nodeEnv);
 
-const Config          = require('./config');
+const configLoad          = require('./config-load');
 
-debug('initializing');
+// #2
+//const logger          = require('express-bunyan-logger');
+const log = console
 
-const main = function main(serverConfig) {
+debug('initializing')
+
+const main = function main(configPath) {
 	const app = express();
 
 	// securing with HTTP-headers
@@ -74,11 +78,11 @@ const main = function main(serverConfig) {
 	without breaking core settings of the express
 	========================================================
 	*/
-	app.config = new Config(serverConfig);
+	app.config = configLoad(configPath)
 
 	// TODO : fix #2 determine what to do with winston-logger
-	// app.use(logger('dev'));
-	app.use(logger('common'));
+	// app.use(wwwLogger('dev'));
+	app.use(wwwLogger('common'))
 
 	app.use(bodyParser.json());
 	app.use(bodyParser.urlencoded({ extended: false }));
@@ -126,6 +130,11 @@ const main = function main(serverConfig) {
 	*/
 
 	if (app.config.session && app.config.session.enabled) {
+
+		if (isProduction && -1 === app.config.session.secret) {
+			log.error('Seems like you forgot to set session.secret in your config')
+		}
+
 		const session_config = {
 			name: app.config.session.name || 'sessionId',
 			secret: app.config.session.secret,
@@ -144,10 +153,10 @@ const main = function main(serverConfig) {
 		};
 
 		if (app.config.session.domain.length > 0) {
-			session_config.cookie.domain = app.config.session.domain.join(',');
+			session_config.cookie.domain = app.config.session.domain.join(',')
 		}
 
-		app.use(session(session_config));
+		app.use(session(session_config))
 	}
 
 	/*

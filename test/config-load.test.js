@@ -20,24 +20,25 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 "use strict";
 
-const assert = require('chai').assert;
-const _      = require('lodash');
-const path   = require('path');
+const expect = require('chai').expect
+const _      = require('lodash')
+const path   = require('path')
 
-const vbexpress = require(packageRoot);
+const configLoad = require(path.join(packageRoot, 'src', 'config-load'))
 
-describe('config', function(){
+describe('config-load', function(){
 
 	describe('default values', function() {
 
-		const config = new vbexpress.Config();
+		const config = configLoad(null)
 
-		[
+		;[
 			['server.host', '127.0.0.1'],
 			['server.port', 3000],
 			['server.path', null],
 			['debug.renderStack', false],
 			['session.secure', false],
+			['session.secret', -1],
 			['auth.enabled', true],
 			['db.enabled', false],
 			['db.debug', false],
@@ -46,23 +47,22 @@ describe('config', function(){
 
 			['session.domain', [] ],
 			['proxy.list', ['loopback']]
-		]
-		.forEach( pair => {
-			const prop = pair[0];
-			const exp = pair[1];
+		].forEach( pair => {
+			const prop = pair[0]
+			const exp = pair[1]
 
 			it(`-> ${prop} should have known value`, ()=> {
-				assert.deepProperty(config, prop, 'config does not contain expected property');
+				expect(config).has.deep.property(prop)
 
-				const act = _.get(config, prop);
-				assert.deepEqual(act, exp, 'property in config has incorect value');
-			});
-		});
-	});
+				const act = _.get(config, prop)
+				expect(act).is.deep.equal(exp, 'property in config has incorect value')
+			})
+		})
+	})
 
 	describe('config with custom values', function() {
 		it('override config 1', () => {
-			const config = new vbexpress.Config({
+			const config = configLoad(null, {
 				"debug": {
 					"renderStack": true,
 				},
@@ -73,31 +73,32 @@ describe('config', function(){
 				}
 			})
 
-			assert.deepPropertyVal(config, 'debug.renderStack', true);
-			assert.deepPropertyVal(config, 'db.connection.username', 'anon');
-			assert.deepPropertyVal(config, 'db.connection.timezone', 'utc');
+			expect(config).has.deep.property('debug.renderStack', true)
+			expect(config).has.deep.property('db.connection.username', 'anon')
+			expect(config).has.deep.property('db.connection.timezone', 'utc')
 		});
 	})
 
-	describe('static methods', function() {
-		describe('readJson', () => {
-			it('reads json', () => {
-				const json = vbexpress.Config.readJson(path.join(__dirname, 'samples', 'config-readJson-01.json'));
+	describe('config with file', function() {
 
-				assert.deepEqual(json, {'key': '12_12'});
-			});
-		})
+		describe('yaml', () => {
+			const config = configLoad(path.join(__dirname, 'samples', 'config-readYaml-01.yml'))
 
+			it('overrides defaults', () => {
+				expect(config).to.have.deep.property('session.secret')
+					.that.is.equal('asdf')
+			})
 
-		describe('readYaml', () => {
-			it('reads yaml', () => {
-				const yaml = vbexpress.Config.readYaml(path.join(__dirname, 'samples', 'config-readYaml-01.yaml'));
+			it('add new properties', () => {
+				expect(config).to.have.deep.property('unknownProperty.andNewValue')
+					.that.is.equal(1111)
+			})
 
-				assert.deepEqual(yaml,
-					{ "json": ["rigid"], "object": { "key": "value", "array": [ { "null_value": null }, { "boolean": true }, { "integer": 1 }]}}
-				);
-			});
+			it('don\' modify defaults, not presents in file', () => {
+				expect(config).to.have.deep.property('db.enabled')
+					.that.is.equal(false)
+			})
 		})
 
 	})
-});
+})

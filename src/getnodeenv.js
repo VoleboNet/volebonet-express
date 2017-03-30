@@ -18,10 +18,10 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-"use strict";
+'use strict'
 
-const _d = 'development';
-const _p = 'production';
+const _d = 'development'
+const _p = 'production'
 
 const _knownEnv = {
 	'production'  : _p,
@@ -33,14 +33,14 @@ const _knownEnv = {
 
 // Load environment:
 exports = module.exports = function getEnv() {
-	let env = process.env.NODE_ENV || _d;
-	env = env.toString().toLowerCase();
+	let env = process.env.NODE_ENV || _d
+	env = env.toString().toLowerCase()
 	if (env in _knownEnv) {
-		env = _knownEnv[env];
+		env = _knownEnv[env]
 	} else {
-		env = _d;
+		env = _d
 	}
 
-	const isProduction = env === _p;
-	return [env, isProduction];
+	const isProduction = env === _p
+	return [env, isProduction]
 }

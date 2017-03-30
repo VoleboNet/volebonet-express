@@ -18,20 +18,25 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-"use strict";
+'use strict'
 
-const fs              = require('fs');
+const nconf           = require('nconf')
+const yaml            = require('js-yaml')
 
-//const debug           = require('debug')('volebo:express:config');
-const _               = require('lodash');
-const yaml            = require('js-yaml');
+// const debug           = require('debug')('volebo:express:config')
 
-const config = function config(options) {
-	if (_.isNil(options)) {
-		options = {};
-	}
+const yamlFormat = {
+	stringify(obj, options) {
+		return yaml.safeDump(obj, options)
+	},
 
-	const def = {
+	parse(str, options) {
+		return yaml.safeLoad(str, options)
+	},
+}
+
+function config(configPath, options) {
+	const defs = {
 		"server": {
 			"host": "127.0.0.1",
 			"port": 3000,
@@ -45,8 +50,8 @@ const config = function config(options) {
 
 		"session": {
 			"enabled": true,
-			"name": "sessionId",
-			"secret" : "DO NOT FORGET TO CHANGE!",
+			"name": 'sessionId',
+			"secret" : -1,
 			"secure" : false,
 			"domain": []
 		},
@@ -74,31 +79,24 @@ const config = function config(options) {
 				"benchmark": true
 			},
 		},
-	};
+	}
 
-	_.defaultsDeep(options, def);
+	nconf.use('overrides', { type: 'literal', store: options })
+	nconf.use('argv')
+	nconf.use('env', { type: 'env',
+		whitelist: ['NODE_ENV']
+	})
 
-	return options;
+	if (configPath) {
+		nconf.use('yaml-config-file', { type: 'file',
+			file: configPath,
+			format: yamlFormat
+		})
+	}
+	nconf.use('defaults', { type: 'literal', store: defs })
+
+	const cfg = nconf.get()
+	return cfg
 }
 
-/**
- * Read object from JSON-file synchronously
- *
- * @param  {string}      filename     path to the file
- * @return {Object}
- */
-config.readJson = function(filename) {
-	return JSON.parse(fs.readFileSync(filename, 'utf8'));
-};
-
-/**
- * Read object from YAML-file synchronously
- *
- * @param  {string}      filename     path to the file
- * @return {Object}
- */
-config.readYaml = function(filename) {
-	return yaml.load(fs.readFileSync(filename, 'utf8'));
-};
-
-exports = module.exports = config;
+exports = module.exports = config
