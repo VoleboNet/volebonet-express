@@ -264,8 +264,8 @@ let main = function main(serverConfig) {
 	if (app.config.db.enabled) {
 		// require here.
 		// add VOLEBO-DATA dependency only when it is required
-		const Model = require('volebo-data');
-		app.model = new Model(app.config.db);
+		const Model = require('volebo-data')
+		app.model = new Model(app.config.db)
 	}
 
 	app._onStarting = function() {
