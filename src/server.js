@@ -49,12 +49,12 @@ const moment          = require('moment')
 
 // TODO : #17 replace with custom set of handlers!
 // BUG: #17
-const handlebarsIntl  = require('handlebars-intl');
+const handlebarsIntl  = require('handlebars-intl')
 
-const [nodeEnv, isProduction] = require('./getnodeenv')();
+const [nodeEnv, isProduction] = require('./getnodeenv')()
 debug('NODE_ENV', nodeEnv);
 
-const configLoad          = require('./config-load');
+const configLoad          = require('./config-load')
 
 // #2
 //const logger          = require('express-bunyan-logger');
@@ -62,12 +62,12 @@ const log = console
 
 debug('initializing')
 
-const main = function main(configPath) {
-	const app = express();
+const main = function main(configPath, overrideOptions) {
+	const app = express()
 
 	// securing with HTTP-headers
-	app.use(helmet());
-	app.set('env', nodeEnv);
+	app.use(helmet())
+	app.set('env', nodeEnv)
 
 	/*
 	========================================================
@@ -77,16 +77,16 @@ const main = function main(configPath) {
 	without breaking core settings of the express
 	========================================================
 	*/
-	app.config = configLoad(configPath)
+	app.config = configLoad(configPath, overrideOptions)
 
 	// TODO : fix #2 determine what to do with winston-logger
-	// app.use(wwwLogger('dev'));
+	// app.use(wwwLogger('dev'))
 	app.use(wwwLogger('common'))
 
-	app.use(bodyParser.json());
-	app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json())
+	app.use(bodyParser.urlencoded({ extended: false }))
 
-	app.set('trust proxy', app.config.proxy.list);
+	app.set('trust proxy', app.config.proxy.list)
 
 	/*
 	========================================================
@@ -96,10 +96,10 @@ const main = function main(configPath) {
 
 	if (_.get(app.config, 'debug.staticPath') && !isProduction) {
 		//let staticPath = path.join(__dirname, app.config.debug.staticPath);
-		const staticPath = app.config.debug.staticPath;
+		const staticPath = app.config.debug.staticPath
 
-		debug('Use static path', staticPath);
-		app.use(express.static(staticPath));
+		debug('Use static path', staticPath)
+		app.use(express.static(staticPath))
 	}
 
 
@@ -109,7 +109,7 @@ const main = function main(configPath) {
 	========================================================
 	*/
 	if (app.config.debug && !isProduction) {
-		app.set('json spaces', 4);
+		app.set('json spaces', 4)
 	}
 
 	/*
@@ -118,9 +118,9 @@ const main = function main(configPath) {
 	========================================================
 	*/
 	app.use((req, _unused_res, next) => {
-		req.forwardedSecure = _.lowerCase(req.headers["x-forwarded-proto"]) === "https";
-		next();
-	});
+		req.forwardedSecure = _.lowerCase(req.headers["x-forwarded-proto"]) === "https"
+		next()
+	})
 
 	/*
 	========================================================
@@ -149,7 +149,7 @@ const main = function main(configPath) {
 				secure : app.config.session.secure,
 			},
 			/*genid: function(req) { return genuuid() // use UUIDs for session IDs  },*/
-		};
+		}
 
 		if (app.config.session.domain.length > 0) {
 			session_config.cookie.domain = app.config.session.domain.join(',')
@@ -172,18 +172,18 @@ const main = function main(configPath) {
 		app.use(app.passport.initialize())
 
 		if (app.config.auth.session){
-			app.use(app.passport.session());
+			app.use(app.passport.session())
 		}
 
 		app.passport.serializeUser(function(user, done) {
-			debug('serializing', user);
-			done(null, user);
-		});
+			debug('serializing', user)
+			done(null, user)
+		})
 
 		app.passport.deserializeUser(function(obj, done) {
-			debug('deserializing', obj);
-			done(null, obj);
-		});
+			debug('deserializing', obj)
+			done(null, obj)
+		})
 	}
 
 	/*
@@ -197,7 +197,7 @@ const main = function main(configPath) {
 		availableLanguages: ['en', 'ru', 'zh'],
 		onLangCodeReady: function(lang_code, _unused_req, res) {
 
-			moment.locale(lang_code);
+			moment.locale(lang_code)
 
 			// REF #6: We could use `defaultOptions`, attached to the
 			// `res` object. This approach could make the code
@@ -206,36 +206,36 @@ const main = function main(configPath) {
 			// https://github.com/ericf/express-handlebars#_rendertemplatetemplate-context-options
 
 			if (!res._renderOriginal) {
-				res._renderOriginal = res.render;
+				res._renderOriginal = res.render
 			}
 			res.render = function overloadedRender(){
 
-				const nargs = Array.prototype.slice.call(arguments);
-				let opt = nargs[1];
+				const nargs = Array.prototype.slice.call(arguments)
+				let opt = nargs[1]
 
 				if (_.isNil(opt)) {
-					opt = {};
+					opt = {}
 				}
 
 				if (res.helpers) {
-					debug('Going to append per-request HBS helpers');
+					debug('Going to append per-request HBS helpers')
 
 					// check, whether some helpers are already attached:
 					if(opt.helpers) {
-						_.assign(opt.helpers, res.helpers);
+						_.assign(opt.helpers, res.helpers)
 					} else {
-						_.set(opt, 'helpers', res.helpers);
+						_.set(opt, 'helpers', res.helpers)
 					}
 				}
 
 				// set locale for HBS-intl formatter (format dates, numbers and messages)
-				_.set(opt, 'data.intl.locales', lang_code);
+				_.set(opt, 'data.intl.locales', lang_code)
 
-				nargs[1] = opt;
-				return res._renderOriginal.apply(this, nargs);
+				nargs[1] = opt
+				return res._renderOriginal.apply(this, nargs)
 			}
 		}
-	});
+	})
 	app.lang = langmw
 
 	app.lang.loadTranslation = function(json) {
@@ -330,7 +330,7 @@ const main = function main(configPath) {
 		}
 	}
 
-	return app;
+	return app
 }
 
-exports = module.exports = main;
+exports = module.exports = main

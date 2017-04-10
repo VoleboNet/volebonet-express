@@ -42,9 +42,9 @@ EXPORT
 ====================================
 */
 
-const vbexp = function(configPath) {
+const vbexp = function(configPath, overrideOptions) {
 
-	const app = createListener(configPath)
+	const app = createListener(configPath, overrideOptions)
 
 	app.start = function app_start(done)
 	{
@@ -102,13 +102,13 @@ const vbexp = function(configPath) {
 		 * Event listener for HTTP server "listening" event.
 		 */
 		const onListening = function onListening() {
-			const addr = server.address();
+			const addr = server.address()
 			const bind = typeof addr === 'string'
 				? `pipe ${addr}`
-				: `address ${addr.address} port ${addr.port}`;
-			log.info('Listening on ' + bind);
+				: `address http://${addr.address}:${addr.port}`
+			log.info('Listening on ' + bind)
 
-			done();
+			done()
 		}
 
 		const onError = function onError(error) {

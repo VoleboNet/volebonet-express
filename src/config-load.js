@@ -35,7 +35,7 @@ const yamlFormat = {
 	},
 }
 
-function config(configPath, options) {
+function config(configPath, overrideOptions) {
 	const defs = {
 		"server": {
 			"host": "127.0.0.1",
@@ -81,7 +81,7 @@ function config(configPath, options) {
 		},
 	}
 
-	nconf.use('overrides', { type: 'literal', store: options })
+	nconf.use('overrides', { type: 'literal', store: overrideOptions })
 	nconf.use('argv')
 	nconf.use('env', { type: 'env',
 		whitelist: ['NODE_ENV']
