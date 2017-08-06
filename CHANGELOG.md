@@ -1,7 +1,17 @@
-# CHANGELOG
 
-## unreleased
+This is the history of changes of the `@volebo/express` package
 
+> This file should be filled by maintainers, using pull requests
+> Please, follow this [guide](http://keepachangelog.com/en/0.3.0/)
+
+## unreleased // ???
+
+## 0.6.0
+
+This record includes changes from previos releases
+
+* remove getnodeenv (app should not care about env)
+* use bunyan logger as common logger
 * CONFIG: renaming: `model.db` => `db.connection`
 * new field for app: `app.passport`
 * I18N: `app.lang.loadTranslation` - for loading translations to App memory
