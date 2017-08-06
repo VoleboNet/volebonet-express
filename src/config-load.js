@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 const nconf           = require('nconf')
 const yaml            = require('js-yaml')
+const _               = require('lodash')
 
 // const debug           = require('debug')('volebo:express:config')
 
@@ -68,7 +69,7 @@ function config(configPath, overrideOptions) {
 		"db": {
 			"enabled": false,
 			"debug": false,
-			"client": "mysql",
+			'client': 'pg',
 
 			"connection" : {
 				"timezone" : "utc",
@@ -96,7 +97,10 @@ function config(configPath, overrideOptions) {
 	nconf.use('defaults', { type: 'literal', store: defs })
 
 	const cfg = nconf.get()
-	return cfg
+
+	const cfgWrapper = Object.create(cfg)
+	cfgWrapper.get = (path) => _.get(cfg, path)
+	return cfgWrapper
 }
 
 exports = module.exports = config

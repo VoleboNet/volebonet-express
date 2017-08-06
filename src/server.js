@@ -46,28 +46,25 @@ const session         = require('express-session')
 const langGen         = require('express-mw-lang')
 const _               = require('lodash')
 const moment          = require('moment')
+const bunyan          = require('bunyan')
 
 // TODO : #17 replace with custom set of handlers!
 // BUG: #17
 const handlebarsIntl  = require('handlebars-intl')
 
-const [nodeEnv, isProduction] = require('./getnodeenv')()
-debug('NODE_ENV', nodeEnv);
 
-const configLoad          = require('./config-load')
+const configLoad      = require('./config-load')
 
-// #2
-//const logger          = require('express-bunyan-logger');
-const log = console
+const log = bunyan.createLogger({name: 'volebo:express'})
 
 debug('initializing')
+
 
 const main = function main(configPath, overrideOptions) {
 	const app = express()
 
 	// securing with HTTP-headers
 	app.use(helmet())
-	app.set('env', nodeEnv)
 
 	/*
 	========================================================
@@ -94,7 +91,7 @@ const main = function main(configPath, overrideOptions) {
 	========================================================
 	*/
 
-	if (_.get(app.config, 'debug.staticPath') && !isProduction) {
+	if (_.get(app.config, 'debug.staticPath')) {
 		//let staticPath = path.join(__dirname, app.config.debug.staticPath);
 		const staticPath = app.config.debug.staticPath
 
@@ -108,7 +105,7 @@ const main = function main(configPath, overrideOptions) {
 	JSON
 	========================================================
 	*/
-	if (app.config.debug && !isProduction) {
+	if (app.config.debug) {
 		app.set('json spaces', 4)
 	}
 
@@ -130,7 +127,7 @@ const main = function main(configPath, overrideOptions) {
 
 	if (app.config.session && app.config.session.enabled) {
 
-		if (isProduction && -1 === app.config.session.secret) {
+		if (-1 === app.config.session.secret) {
 			log.error('Seems like you forgot to set session.secret in your config')
 		}
 
@@ -301,7 +298,7 @@ const main = function main(configPath, overrideOptions) {
 		const errorViewPath = path.join(__dirname, 'views', 'error.hbs')
 		const errorLayoutlPath = path.join(__dirname, 'views', 'layouts', 'default.hbs')
 
-		if (app.config.debug && app.config.debug.renderStack && !isProduction) {
+		if (app.config.debug && app.config.debug.renderStack) {
 
 			// development error handler
 			// will print stacktrace

@@ -18,10 +18,10 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-"use strict";
+'use strict'
 
-const chai = require("chai");
+const chai = require('chai')
 
-global.expect = chai.expect;
+global.expect = chai.expect
 /* ROOT of the package */
-global.packageRoot = process.cwd();
+global.packageRoot = process.cwd()

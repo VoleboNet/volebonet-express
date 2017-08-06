@@ -18,7 +18,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-"use strict";
+'use strict'
 
 const expect = require('chai').expect
 const _      = require('lodash')
@@ -42,7 +42,7 @@ describe('config-load', function(){
 			['auth.enabled', true],
 			['db.enabled', false],
 			['db.debug', false],
-			['db.client', 'mysql'],
+			['db.client', 'pg'],
 			['db.connection.timezone', 'utc'],
 
 			['session.domain', [] ],
