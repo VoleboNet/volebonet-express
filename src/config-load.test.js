@@ -24,7 +24,7 @@ const expect = require('chai').expect
 const _      = require('lodash')
 const path   = require('path')
 
-const configLoad = require(path.join(packageRoot, 'src', 'config-load'))
+const configLoad = require('./config-load')
 
 describe('config-load', function(){
 
@@ -52,7 +52,7 @@ describe('config-load', function(){
 			const exp = pair[1]
 
 			it(`-> ${prop} should have known value`, ()=> {
-				expect(config).has.deep.property(prop)
+				expect(config).has.nested.property(prop)
 
 				const act = _.get(config, prop)
 				expect(act).is.deep.equal(exp, 'property in config has incorect value')
@@ -73,29 +73,29 @@ describe('config-load', function(){
 				}
 			})
 
-			expect(config).has.deep.property('debug.renderStack', true)
-			expect(config).has.deep.property('db.connection.username', 'anon')
-			expect(config).has.deep.property('db.connection.timezone', 'utc')
+			expect(config).has.nested.property('debug.renderStack', true)
+			expect(config).has.nested.property('db.connection.username', 'anon')
+			expect(config).has.nested.property('db.connection.timezone', 'utc')
 		});
 	})
 
 	describe('config with file', function() {
 
 		describe('yaml', () => {
-			const config = configLoad(path.join(__dirname, 'samples', 'config-readYaml-01.yml'))
+			const config = configLoad(path.join(__dirname, '../test/samples/config-readYaml-01.yml'))
 
 			it('overrides defaults', () => {
-				expect(config).to.have.deep.property('session.secret')
+				expect(config).to.have.nested.property('session.secret')
 					.that.is.equal('asdf')
 			})
 
 			it('add new properties', () => {
-				expect(config).to.have.deep.property('unknownProperty.andNewValue')
+				expect(config).to.have.nested.property('unknownProperty.andNewValue')
 					.that.is.equal(1111)
 			})
 
 			it('don\' modify defaults, not presents in file', () => {
-				expect(config).to.have.deep.property('db.enabled')
+				expect(config).to.have.nested.property('db.enabled')
 					.that.is.equal(false)
 			})
 		})
