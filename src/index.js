@@ -28,7 +28,12 @@ const bunyan          = require('bunyan')
 
 
 const createListener  = require('./server')
-const log = bunyan.createLogger({name: 'volebo:express'})
+const log = bunyan.createLogger({
+	name: 'volebo:express',
+	streams:[{
+		path: 'log/express.log',
+	}],
+})
 
 const deprecated_error_die = function(done, msg) {
 	const e = new Error(msg)
@@ -58,9 +63,9 @@ const vbexp = function(configPath, overrideOptions) {
 		app._onStarting()
 
 		// Get port from environment and store in Express.
-		let host = app.config.server.host
-		let port = app.config.server.port
-		let localpath = app.config.server.path
+		let host = app.config.get('server:host')
+		let port = app.config.get('server:port')
+		let localpath = app.config.get('server:path')
 
 		debug('host', host)
 		debug('port', port)
@@ -104,7 +109,7 @@ const vbexp = function(configPath, overrideOptions) {
 			const addr = server.address()
 			const bind = typeof addr === 'string'
 				? `pipe ${addr}`
-				: `address http://${addr.address}:${addr.port}`
+				: `port http://${addr.address}:${addr.port}`
 			log.info('Listening on ' + bind)
 
 			done()

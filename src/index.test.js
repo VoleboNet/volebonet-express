@@ -29,34 +29,38 @@ describe('module test', function(){
 		"server": {
 			"path": "test.sock"
 		}
-	};
+	}
 
-	[
+	const testCases = [
 		['default sock', configDefaultSock],
 		['file sock', configFileSock],
-	].forEach(config => {
+	]
+
+	testCases.forEach(config => {
 		const configName = config[0]
 		const configObj = config[1]
 
 		describe(`run and restart with config "${configName}"`, () => {
-			this.slow(800);
-			const app = vbexpress(configObj);
+			this.slow(800)
+			const app = vbexpress(null, configObj)
 
 			beforeEach(function(done) {
-				app.start(done);
-			});
+				app.start(done)
+			})
 
 			afterEach(function(done) {
-				app.close(done);
-			});
+				app.close(done)
+			})
 
-			[
+			const testCasesStage = [
 				'run out of the box',
 				'should run after restart',
-			].forEach(function(description){
+			]
+
+			testCasesStage.forEach(function(description){
 
 				it(description, function () {
-					expect(true).is.true;
+					expect(true).is.true
 				})
 			})
 		})
@@ -64,18 +68,18 @@ describe('module test', function(){
 
 	describe('on start two apps at the same time', () => {
 
-		let app1 = null;
-		let app2 = null;
+		let app1 = null
+		let app2 = null
 
 		beforeEach(() => {
-			app1 = vbexpress();
-			app2 = vbexpress();
-		});
+			app1 = vbexpress()
+			app2 = vbexpress()
+		})
 
 		afterEach(() => {
-			app2.close();
-			app1.close();
-		});
+			app2.close()
+			app1.close()
+		})
 
 		it('should call done with ERROR', done => {
 
@@ -84,14 +88,14 @@ describe('module test', function(){
 				expect(err).has.property('message')
 				expect(err.message).is.match(/Port \d+ is already in use/i)
 
-				done();
-			};
+				done()
+			}
 
 			app1.start(() => {
-				app2.start(errDone);
-			});
+				app2.start(errDone)
+			})
 
-		});
+		})
 
 		// it('should throw EADDRINUSE', done => {
 		// 	assert.throw(() => {
@@ -100,5 +104,5 @@ describe('module test', function(){
 		// 		done();
 		// 	});
 		// });
-	});
-});
+	})
+})

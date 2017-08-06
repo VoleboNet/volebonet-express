@@ -53,7 +53,13 @@ const handlebarsIntl  = require('handlebars-intl')
 
 const configLoad      = require('./config-load')
 
-const log = bunyan.createLogger({name: 'volebo.express.server'})
+// TODO: autocreate log dir
+const log = bunyan.createLogger({
+	name: 'volebo.express.server',
+	streams:[{
+		path: 'log/express.log',
+	}],
+})
 
 debug('initializing')
 
@@ -77,13 +83,16 @@ const main = function main(configPath, overrideOptions) {
 	// TODO: gh #2 load log config from config
 	const logConfig = {
 		name: 'volebo.express.server.www',
+		streams:[{
+			path: 'log/express.log',
+		}],
 	}
 	app.use(wwwLogger(logConfig))
 
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: false }))
 
-	app.set('trust proxy', app.config.proxy.list)
+	app.set('trust proxy', app.config.get('proxy.list'))
 
 	/*
 	========================================================
@@ -91,9 +100,9 @@ const main = function main(configPath, overrideOptions) {
 	========================================================
 	*/
 
-	if (_.get(app.config, 'debug.staticPath')) {
+	if (app.config.get('debug.staticPath')) {
 		//let staticPath = path.join(__dirname, app.config.debug.staticPath);
-		const staticPath = app.config.debug.staticPath
+		const staticPath = app.config.get('debug.staticPath')
 
 		debug('Use static path', staticPath)
 		app.use(express.static(staticPath))
@@ -125,15 +134,15 @@ const main = function main(configPath, overrideOptions) {
 	========================================================
 	*/
 
-	if (app.config.session && app.config.session.enabled) {
+	if (app.config.get('session.enabled')) {
 
-		if (-1 === app.config.session.secret) {
+		if (-1 === app.config.get('session.secret')) {
 			log.error('Seems like you forgot to set session.secret in your config')
 		}
 
 		const session_config = {
-			name: app.config.session.name || 'sessionId',
-			secret: app.config.session.secret,
+			name: app.config.get('session.name', 'sessionId'),
+			secret: app.config.get('session.secret'),
 			resave: false,
 			saveUninitialized: false,
 
@@ -143,13 +152,13 @@ const main = function main(configPath, overrideOptions) {
 				maxAge: 1000*60*30, // ms, 30 minutes now
 				httpOnly: true,
 
-				secure : app.config.session.secure,
+				secure : app.config.get('session.secure'),
 			},
 			/*genid: function(req) { return genuuid() // use UUIDs for session IDs  },*/
 		}
 
-		if (app.config.session.domain.length > 0) {
-			session_config.cookie.domain = app.config.session.domain.join(',')
+		if (app.config.get('session.domain.length') > 0) {
+			session_config.cookie.domain = app.config.get('session.domain').join(',')
 		}
 
 		app.use(session(session_config))
@@ -163,12 +172,12 @@ const main = function main(configPath, overrideOptions) {
 
 	app.passport = null
 
-	if (app.config.auth.enabled) {
+	if (app.config.get('auth.enabled')) {
 
 		app.passport = require('passport')
 		app.use(app.passport.initialize())
 
-		if (app.config.auth.session){
+		if (app.config.get('auth.session')){
 			app.use(app.passport.session())
 		}
 
@@ -266,11 +275,11 @@ const main = function main(configPath, overrideOptions) {
 	AUTOLOAD MODEL
 	========================================================
 	*/
-	if (app.config.db.enabled) {
+	if (app.config.get('db.enabled')) {
 		// require here.
 		// add VOLEBO-DATA dependency only when it is required
 		const Model = require('volebo-data')
-		app.model = new Model(app.config.db)
+		app.model = new Model(app.config.get('db'))
 	}
 
 	app._onStarting = function() {
@@ -298,7 +307,7 @@ const main = function main(configPath, overrideOptions) {
 		const errorViewPath = path.join(__dirname, 'views', 'error.hbs')
 		const errorLayoutlPath = path.join(__dirname, 'views', 'layouts', 'default.hbs')
 
-		if (app.config.debug && app.config.debug.renderStack) {
+		if (app.config.get('debug.renderStack')) {
 
 			// development error handler
 			// will print stacktrace

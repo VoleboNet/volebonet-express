@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 const nconf           = require('nconf')
 const yaml            = require('js-yaml')
-const _               = require('lodash')
 
 // const debug           = require('debug')('volebo:express:config')
 
@@ -36,7 +35,22 @@ const yamlFormat = {
 	},
 }
 
-function config(configPath, overrideOptions) {
+class Config {
+	constructor(storage) {
+		this.__storage = storage
+	}
+
+	get(propertyPath) {
+		const _n = propertyPath.replace(/(\w)\.(\w)/g, '$1:$2')
+		return this.__storage.get(_n)
+	}
+
+	get debug() {
+		return !! this.get('debug')
+	}
+}
+
+function loadConfig(configPath, overrideOptions) {
 	const defs = {
 		"server": {
 			"host": "127.0.0.1",
@@ -84,7 +98,10 @@ function config(configPath, overrideOptions) {
 
 	nconf.use('overrides', { type: 'literal', store: overrideOptions })
 	nconf.use('argv')
-	nconf.use('env', { type: 'env',
+	nconf.use('env', {
+		type: 'env',
+		separator: '_',
+		match: /^volebo/i,
 		whitelist: ['NODE_ENV']
 	})
 
@@ -96,11 +113,10 @@ function config(configPath, overrideOptions) {
 	}
 	nconf.use('defaults', { type: 'literal', store: defs })
 
-	const cfg = nconf.get()
+	// const cfg = nconf.get()
 
-	const cfgWrapper = Object.create(cfg)
-	cfgWrapper.get = (path) => _.get(cfg, path)
-	return cfgWrapper
+	const cfg = new Config(nconf)
+	return cfg
 }
 
-exports = module.exports = config
+exports = module.exports = loadConfig

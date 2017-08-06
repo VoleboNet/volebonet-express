@@ -82,15 +82,17 @@ describe('server-middlewares', function(){
 		let app = null
 
 		beforeEach(() => {
-			app = vbexpress()
+			app = vbexpress(null, {
+				debug: {
+					renderStack: true,
+				}
+			})
 		})
 		afterEach(done => {
 			app.close(done)
 		})
 
 		it('should render template with undefined render.options', done => {
-
-			app.config.debug.renderStack = true
 
 			app.get('/renderNullOptions', (_unused_req, res, next) => {
 				const optionsAndContext = null

@@ -6,6 +6,8 @@ This is the history of changes of the `@volebo/express` package
 
 ## unreleased // ???
 
+* new config object `Config`. Access to configuration only with `app.config.get('path')`
+
 ## 0.6.1 // 2017-08-06
 
 This record includes changes from previos releases

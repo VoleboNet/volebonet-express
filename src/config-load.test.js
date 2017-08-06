@@ -32,7 +32,7 @@ describe('config-load', function(){
 
 		const config = configLoad(null)
 
-		;[
+		const testCases = [
 			['server.host', '127.0.0.1'],
 			['server.port', 3000],
 			['server.path', null],
@@ -47,14 +47,20 @@ describe('config-load', function(){
 
 			['session.domain', [] ],
 			['proxy.list', ['loopback']]
-		].forEach( pair => {
+		]
+
+		testCases.forEach( pair => {
 			const prop = pair[0]
 			const exp = pair[1]
 
 			it(`-> ${prop} should have known value`, ()=> {
-				expect(config).has.nested.property(prop)
+				const act = config.get(prop)
+				expect(act).is.deep.equal(exp, 'property in config has incorect value')
+			})
 
-				const act = _.get(config, prop)
+			it.skip(`-> ${prop} is accessible with UPPER case`, () => {
+				const upper = _.toUpper(prop)
+				const act = config.get(upper)
 				expect(act).is.deep.equal(exp, 'property in config has incorect value')
 			})
 		})
@@ -63,40 +69,46 @@ describe('config-load', function(){
 	describe('config with custom values', function() {
 		it('override config 1', () => {
 			const config = configLoad(null, {
-				"debug": {
-					"renderStack": true,
+				'debug': {
+					'renderStack': true,
 				},
-				"db": {
-					"connection": {
-						"username": "anon"
+				'db': {
+					'connection': {
+						'username': 'anon'
 					}
 				}
 			})
 
-			expect(config).has.nested.property('debug.renderStack', true)
-			expect(config).has.nested.property('db.connection.username', 'anon')
-			expect(config).has.nested.property('db.connection.timezone', 'utc')
-		});
+			expect(config.get('debug.renderStack')).equals(true)
+			expect(config.get('db.connection.username')).equals('anon')
+			expect(config.get('db.connection.timezone')).equals('utc')
+		})
 	})
 
 	describe('config with file', function() {
 
 		describe('yaml', () => {
-			const config = configLoad(path.join(__dirname, '../test/samples/config-readYaml-01.yml'))
+
+			const configPath = path.join(__dirname, '../test/samples/config-readYaml-01.yml')
+			let config = null
+
+			beforeEach(() => {
+				config = configLoad(configPath)
+			})
 
 			it('overrides defaults', () => {
-				expect(config).to.have.nested.property('session.secret')
-					.that.is.equal('asdf')
+				const act = config.get('session.secret')
+				expect(act).is.equal('asdf')
 			})
 
 			it('add new properties', () => {
-				expect(config).to.have.nested.property('unknownProperty.andNewValue')
-					.that.is.equal(1111)
+				const act = config.get('unknownProperty.andNewValue')
+				expect(act).is.equal(1111)
 			})
 
-			it('don\' modify defaults, not presents in file', () => {
-				expect(config).to.have.nested.property('db.enabled')
-					.that.is.equal(false)
+			it('don\' modify defaults not present in file', () => {
+				const act = config.get('db.enabled')
+				expect(act).is.equal(false)
 			})
 		})
 
