@@ -35,9 +35,7 @@ const path            = require('path')
 const debug           = require('debug')('volebo:express:server')
 const express         = require('express')
 const helmet          = require('helmet')
-// #2
-//const logger          = require('express-bunyan-logger');
-const wwwLogger       = require('morgan')
+const wwwLogger       = require('express-bunyan-logger');
 
 const bodyParser      = require('body-parser')
 const handlebars      = require('express-handlebars')
@@ -55,7 +53,7 @@ const handlebarsIntl  = require('handlebars-intl')
 
 const configLoad      = require('./config-load')
 
-const log = bunyan.createLogger({name: 'volebo:express'})
+const log = bunyan.createLogger({name: 'volebo.express.server'})
 
 debug('initializing')
 
@@ -76,9 +74,11 @@ const main = function main(configPath, overrideOptions) {
 	*/
 	app.config = configLoad(configPath, overrideOptions)
 
-	// TODO : fix #2 determine what to do with winston-logger
-	// app.use(wwwLogger('dev'))
-	app.use(wwwLogger('common'))
+	// TODO: gh #2 load log config from config
+	const logConfig = {
+		name: 'volebo.express.server.www',
+	}
+	app.use(wwwLogger(logConfig))
 
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: false }))

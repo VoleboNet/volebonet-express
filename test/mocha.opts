@@ -4,4 +4,4 @@
 --check-leaks
 --ui bdd
 --require test/bootstrap
-test/**/*.test.js src/**/*.test.js
+src/**/*.test.js

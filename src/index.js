@@ -112,7 +112,7 @@ const vbexp = function(configPath, overrideOptions) {
 
 		const onError = function onError(error) {
 
-			// TODO : #2 handle errors and write to the error log!!
+			log.error(error)
 
 			if (error.syscall !== 'listen') {
 				throw error;

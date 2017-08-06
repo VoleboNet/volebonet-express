@@ -6,7 +6,7 @@ This is the history of changes of the `@volebo/express` package
 
 ## unreleased // ???
 
-## 0.6.0
+## 0.6.1 // 2017-08-06
 
 This record includes changes from previos releases
 
@@ -18,6 +18,9 @@ This record includes changes from previos releases
 * HBS: move views to new folder
 * HBS: reorganize helpers (init through function)
 * ERROR handling: fixed bug with unaccessible layout for error-rendering
+* migrate to `bunyan` (instead of `morgan`) for logging (see #2)
+
+* see #2
 
 ## 0.3.1
 
