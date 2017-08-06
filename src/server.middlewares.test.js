@@ -21,106 +21,106 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 'use strict'
 
 const request  = require('supertest')
-const vbexpress = require(packageRoot)
+const vbexpress = require('./')
 
 describe('server-middlewares', function(){
 
 	describe('check NOT FOUND', () => {
 
-		const app = vbexpress();
+		const app = vbexpress()
 
 		before( done=> {
-			app.start(done);
-		});
-		after(done => app.close(done));
+			app.start(done)
+		})
+		after(done => app.close(done))
 
 		it('not found', done => {
 			request(app)
 				.get('/xxxxxxxxxxxxxx-not-exists')
 				.expect(/Not found/i)
-				.expect(404, done);
-		});
-	});
+				.expect(404, done)
+		})
+	})
 
 	describe('check "forwardedSecure"', () => {
 
-		const app = vbexpress();
+		const app = vbexpress()
 
 		before( done=> {
 			app.get('/forwardedSecure', (req, res, next) => {
-				res.send(req.forwardedSecure).status(200);
-			});
+				res.send(req.forwardedSecure).status(200)
+			})
 
-			app.start(done);
-		});
-		after(done => app.close(done));
+			app.start(done)
+		})
+		after(done => app.close(done))
 
 		it('forwardedSecure is true for "x-forwarded-proto"', done => {
 			request(app)
 				.get('/forwardedSecure')
 				.set('X-FORWARDED-PROTO', 'HTTPS')
-				.expect(200, 'true', done);
-		});
+				.expect(200, 'true', done)
+		})
 
 		it('forwardedSecure is false for "x-forwarded-proto" http', done => {
 			request(app)
 				.get('/forwardedSecure')
 				.set('X-FORWARDED-PROTO', 'HTTP')
-				.expect(200, 'false', done);
-		});
+				.expect(200, 'false', done)
+		})
 
 		it('forwardedSecure is false for unset "x-forwarded-proto"', done => {
 			request(app)
 				.get('/forwardedSecure')
-				.expect(200, 'false', done);
-		});
+				.expect(200, 'false', done)
+		})
 
-	});
+	})
 
 	describe('check "onLangCodeReady"', () => {
 
-		let app = null;
+		let app = null
 
 		beforeEach(() => {
-			app = vbexpress();
-		});
+			app = vbexpress()
+		})
 		afterEach(done => {
-			app.close(done);
-		});
+			app.close(done)
+		})
 
 		it('should render template with undefined render.options', done => {
 
-			app.config.debug.renderStack = true;
+			app.config.debug.renderStack = true
 
 			app.get('/renderNullOptions', (_unused_req, res, next) => {
-				const optionsAndContext = null;
-				return res.render('error', optionsAndContext);
-			});
+				const optionsAndContext = null
+				return res.render('error', optionsAndContext)
+			})
 
 			app.start( () => {
 				request(app)
 					.get('/renderNullOptions')
-					.expect(200, done);
-			});
-		});
+					.expect(200, done)
+			})
+		})
 
 
 		it('should render template after multiple call to `setLocale`', done => {
 
 			app.get('/multiSetCulture', (req, res, next) => {
 
-				req.lang.setLocale('en');
-				req.lang.setLocale('ru');
-				req.lang.setLocale('en');
+				req.lang.setLocale('en')
+				req.lang.setLocale('ru')
+				req.lang.setLocale('en')
 
-				return res.render('error');
-			});
+				return res.render('error')
+			})
 
 			app.start( () => {
 				request(app)
 					.get('/multiSetCulture')
-					.expect(200, done);
-			});
-		});
-	});
-});
+					.expect(200, done)
+			})
+		})
+	})
+})
