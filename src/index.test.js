@@ -20,7 +20,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 'use strict'
 
-const vbexpress = require(packageRoot)
+const vbexpress = require('./')
 
 describe('module test', function(){
 

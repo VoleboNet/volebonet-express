@@ -2,7 +2,7 @@
   "name": "@volebo/volebo-express",
   "version": "0.6.0",
   "description": "ExpressJS server for volebo.net",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "`npm bin`/mocha",
     "lint": "`npm bin`/eslint ./",

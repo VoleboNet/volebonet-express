@@ -24,12 +24,11 @@ const debug           = require('debug')('volebo:express')
 const fs              = require('fs')
 const http            = require('http')
 const express         = require('express')
+const bunyan          = require('bunyan')
 
-const createListener  = require('./src/server')
 
-// TODO : #2 use LOGGER!!!
-// BUG: #2
-const log             = console;
+const createListener  = require('./server')
+const log = bunyan.createLogger({name: 'volebo:express'})
 
 const deprecated_error_die = function(done, msg) {
 	const e = new Error(msg)
