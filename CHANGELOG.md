@@ -12,6 +12,10 @@ This is the history of changes of the `@volebo/express` package
 * config files must have `volebo` as root node
 * easy to load config from the environment, using variables like `volebo_model_enabled`
 * add `log` dir to git, because FYTIW (new bug: gh see #22)
+* set default value for `session.domains`: `['volebo.net']`
+* accurate model create/dispose
+
+* well-tune `istanbul` (coverage tool)
 
 ## 0.6.1 // 2017-08-06
 
