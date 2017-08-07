@@ -74,7 +74,9 @@ function loadConfig(configPath, overrideOptions) {
 				'name': 'sessionId',
 				'secret' : -1,
 				'secure' : false,
-				'domain': []
+				'domains': [
+					'volebo.net',
+				]
 			},
 
 			'auth': {

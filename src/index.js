@@ -140,8 +140,21 @@ const vbexp = function(configPath, overrideOptions) {
 			}
 		}
 
-		server.on('error', onError);
-		server.on('listening', onListening);
+		const onClose = function onClose() {
+			debug('on closing')
+
+			if (app && app.model) {
+				debug('close model')
+				app.model.close()
+			}
+
+			debug('Server closed')
+			log.info('Server closed')
+		}
+
+		server.on('error', onError)
+		server.on('listening', onListening)
+		server.on('close', onClose)
 
 		// Listen on provided port, on all network interfaces.
 		if(useLocalPath) {
@@ -152,9 +165,9 @@ const vbexp = function(configPath, overrideOptions) {
 
 		app.close = function() {
 			return server.close.apply(server, arguments);
-		};
+		}
 
-		return;
+		return
 	}
 
 	return app;

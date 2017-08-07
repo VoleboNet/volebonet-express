@@ -1,0 +1,9 @@
+verbose: false
+instrumentation:
+  excludes:
+    - node_modules/**
+    - tmp/**
+    - bin/**
+    - '**/*.test.js'
+reporting:
+  dir: ./coverage

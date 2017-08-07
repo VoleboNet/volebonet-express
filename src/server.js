@@ -46,6 +46,8 @@ const _               = require('lodash')
 const moment          = require('moment')
 const bunyan          = require('bunyan')
 
+const VoleboModel     = require('volebo-data')
+
 // TODO : #17 replace with custom set of handlers!
 // BUG: #17
 const handlebarsIntl  = require('handlebars-intl')
@@ -80,6 +82,20 @@ const main = function main(configPath, overrideOptions) {
 	*/
 	app.config = configLoad(configPath, overrideOptions)
 
+	/*
+	========================================================
+	AUTOLOAD MODEL
+	========================================================
+	*/
+	if (app.config.get('model.enabled')) {
+		app.model = new VoleboModel(app.config.get('model'))
+	}
+
+	/*
+	========================================================
+	COMMON MIDDLEWARES
+	========================================================
+	*/
 	// TODO: gh #2 load log config from config
 	const logConfig = {
 		name: 'volebo.express.server.www',
@@ -157,8 +173,9 @@ const main = function main(configPath, overrideOptions) {
 			/*genid: function(req) { return genuuid() // use UUIDs for session IDs  },*/
 		}
 
-		if (app.config.get('session.domain.length') > 0) {
-			session_config.cookie.domain = app.config.get('session.domain').join(',')
+		const session_domains = app.config.get('session.domains')
+		if (_.isArray(session_domains) && session_domains.length > 0) {
+			session_config.cookie.domain = session_domains.join(',')
 		}
 
 		app.use(session(session_config))
@@ -217,11 +234,7 @@ const main = function main(configPath, overrideOptions) {
 			res.render = function overloadedRender(){
 
 				const nargs = Array.prototype.slice.call(arguments)
-				let opt = nargs[1]
-
-				if (_.isNil(opt)) {
-					opt = {}
-				}
+				const opt = _.get(nargs, '[1]', {})
 
 				if (res.helpers) {
 					debug('Going to append per-request HBS helpers')
@@ -269,18 +282,6 @@ const main = function main(configPath, overrideOptions) {
 
 	app.engine('hbs', hbs.engine)
 	app.set('view engine', 'hbs')
-
-	/*
-	========================================================
-	AUTOLOAD MODEL
-	========================================================
-	*/
-	if (app.config.get('db.enabled')) {
-		// require here.
-		// add VOLEBO-DATA dependency only when it is required
-		const Model = require('volebo-data')
-		app.model = new Model(app.config.get('db'))
-	}
 
 	app._onStarting = function() {
 		/*
