@@ -14,6 +14,7 @@ This is the history of changes of the `@volebo/express` package
 * add `log` dir to git, because FYTIW (new bug: gh see #22)
 * set default value for `session.domains`: `['volebo.net']`
 * accurate model create/dispose
+* use [`express-flash`](https://www.npmjs.com/package/express-flash) (gh see #24)
 
 * well-tune `istanbul` (coverage tool)
 

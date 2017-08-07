@@ -69,13 +69,17 @@ function loadConfig(configPath, overrideOptions) {
 				'staticPath': 'public',
 			},
 
+			'flash': {
+				'enabled': false,
+			},
+
 			'session': {
 				'enabled': true,
 				'name': 'sessionId',
 				'secret' : -1,
 				'secure' : false,
 				'domains': [
-					'volebo.net',
+					// '*.volebo.net',
 				]
 			},
 

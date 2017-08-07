@@ -37,6 +37,7 @@ describe('config-load', function(){
 			['server.port', 3000],
 			['server.path', null],
 			['debug.renderStack', false],
+			['flash.enabled', false],
 			['session.secure', false],
 			['session.secret', -1],
 			['auth.enabled', true],

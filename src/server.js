@@ -41,6 +41,8 @@ const bodyParser      = require('body-parser')
 const handlebars      = require('express-handlebars')
 
 const session         = require('express-session')
+const flash           = require('express-flash')
+
 const langGen         = require('express-mw-lang')
 const _               = require('lodash')
 const moment          = require('moment')
@@ -179,6 +181,10 @@ const main = function main(configPath, overrideOptions) {
 		}
 
 		app.use(session(session_config))
+	}
+
+	if (app.config.get('flash.enabled')) {
+		app.use(flash())
 	}
 
 	/*
