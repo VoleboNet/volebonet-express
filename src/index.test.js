@@ -22,7 +22,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 const vbexpress = require('./')
 
-describe('module test', function(){
+describe('index.test.js', function(){
 
 	const configDefaultSock = {}
 	const configFileSock = {
@@ -36,9 +36,8 @@ describe('module test', function(){
 		['file sock', configFileSock],
 	]
 
-	testCases.forEach(config => {
-		const configName = config[0]
-		const configObj = config[1]
+	testCases.forEach(tc => {
+		const [configName, configObj] = tc
 
 		describe(`run and restart with config "${configName}"`, () => {
 			this.slow(800)

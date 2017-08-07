@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 const nconf           = require('nconf')
 const yaml            = require('js-yaml')
 
-// const debug           = require('debug')('volebo:express:config')
+const debug           = require('debug')('volebo:express:config')
 
 const yamlFormat = {
 	stringify(obj, options) {
@@ -41,7 +41,12 @@ class Config {
 	}
 
 	get(propertyPath) {
-		const _n = propertyPath.replace(/(\w)\.(\w)/g, '$1:$2')
+		let _n = 'volebo'
+
+		if (propertyPath) {
+			_n += ':' + propertyPath.replace(/(\w)\.(\w)/g, '$1:$2')
+		}
+
 		return this.__storage.get(_n)
 	}
 
@@ -52,66 +57,74 @@ class Config {
 
 function loadConfig(configPath, overrideOptions) {
 	const defs = {
-		"server": {
-			"host": "127.0.0.1",
-			"port": 3000,
-			"path": null
-		},
+		'volebo': {
+			'server': {
+				'host': '127.0.0.1',
+				'port': 3000,
+				'path': null
+			},
 
-		"debug": {
-			"renderStack": false,
-			"staticPath": "public",
-		},
+			'debug': {
+				'renderStack': false,
+				'staticPath': 'public',
+			},
 
-		"session": {
-			"enabled": true,
-			"name": 'sessionId',
-			"secret" : -1,
-			"secure" : false,
-			"domain": []
-		},
+			'session': {
+				'enabled': true,
+				'name': 'sessionId',
+				'secret' : -1,
+				'secure' : false,
+				'domain': []
+			},
 
-		"auth": {
-			"enabled": true,
-			"session": true,
-		},
+			'auth': {
+				'enabled': true,
+				'session': true,
+			},
 
-		"proxy": {
-			"list": ["loopback"]
-		},
+			'proxy': {
+				'list': ['loopback']
+			},
 
-		"db": {
-			"enabled": false,
-			"debug": false,
-			'client': 'pg',
-
-			"connection" : {
-				"timezone" : "utc",
-				"username" : "",
-				"password" : "",
-				"database" : "",
-				"host"     : "localhost",
-				"benchmark": true
+			'model': {
+				'enabled': false,
+				'debug': false,
 			},
 		},
 	}
 
-	nconf.use('overrides', { type: 'literal', store: overrideOptions })
+	nconf.use('overrides', {
+		type: 'literal',
+		store: overrideOptions,
+		// logicalSeparator: '.',
+	})
+
 	nconf.use('argv')
+
 	nconf.use('env', {
 		type: 'env',
 		separator: '_',
 		match: /^volebo/i,
-		whitelist: ['NODE_ENV']
+		whitelist: ['NODE_ENV'],
+		// logicalSeparator: '.',
 	})
 
 	if (configPath) {
-		nconf.use('yaml-config-file', { type: 'file',
+		nconf.use('yaml-config-file', {
+			type: 'file',
 			file: configPath,
-			format: yamlFormat
+			format: yamlFormat,
+			// logicalSeparator: '.',
 		})
+
+		debug('append config from file', configPath)
 	}
-	nconf.use('defaults', { type: 'literal', store: defs })
+
+	nconf.use('defaults', {
+		type: 'literal',
+		store: defs,
+		// logicalSeparator: '.',
+	})
 
 	// const cfg = nconf.get()
 

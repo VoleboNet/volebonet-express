@@ -4,8 +4,9 @@
 # try uncommenting the next line
 # { foo: 'bar' }
 
-session:
-  secret: 'asdf'
-unknownProperty:
-  andNewValue: 1111
+volebo:
+  session:
+    secret: 'asdf'
+  unknownProperty:
+    andNewValue: 1111
 ...

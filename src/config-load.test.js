@@ -30,7 +30,7 @@ describe('config-load', function(){
 
 	describe('default values', function() {
 
-		const config = configLoad(null)
+		const config = configLoad()
 
 		const testCases = [
 			['server.host', '127.0.0.1'],
@@ -40,10 +40,8 @@ describe('config-load', function(){
 			['session.secure', false],
 			['session.secret', -1],
 			['auth.enabled', true],
-			['db.enabled', false],
-			['db.debug', false],
-			['db.client', 'pg'],
-			['db.connection.timezone', 'utc'],
+			['model.enabled', false],
+			['model.debug', false],
 
 			['session.domain', [] ],
 			['proxy.list', ['loopback']]
@@ -53,12 +51,12 @@ describe('config-load', function(){
 			const prop = pair[0]
 			const exp = pair[1]
 
-			it(`-> ${prop} should have known value`, ()=> {
+			it(`-> [${prop}] should have known value`, ()=> {
 				const act = config.get(prop)
 				expect(act).is.deep.equal(exp, 'property in config has incorect value')
 			})
 
-			it.skip(`-> ${prop} is accessible with UPPER case`, () => {
+			it.skip(`-> [${prop}] is accessible with UPPER case`, () => {
 				const upper = _.toUpper(prop)
 				const act = config.get(upper)
 				expect(act).is.deep.equal(exp, 'property in config has incorect value')
@@ -68,20 +66,20 @@ describe('config-load', function(){
 
 	describe('config with custom values', function() {
 		it('override config 1', () => {
-			const config = configLoad(null, {
+			const config = configLoad(null, { 'volebo': {
 				'debug': {
 					'renderStack': true,
 				},
-				'db': {
+				'model': {
 					'connection': {
 						'username': 'anon'
 					}
 				}
-			})
+			}})
 
 			expect(config.get('debug.renderStack')).equals(true)
-			expect(config.get('db.connection.username')).equals('anon')
-			expect(config.get('db.connection.timezone')).equals('utc')
+			expect(config.get('model.connection.username')).equals('anon')
+			expect(config.get('model.enabled')).equals(false)
 		})
 	})
 
@@ -107,10 +105,38 @@ describe('config-load', function(){
 			})
 
 			it('don\' modify defaults not present in file', () => {
-				const act = config.get('db.enabled')
+				const act = config.get('model.enabled')
 				expect(act).is.equal(false)
 			})
 		})
 
+	})
+
+	describe('config from environment', function() {
+
+		let config = null
+
+		beforeEach(() => {
+			process.env['volebo_session_name'] = 'sample-session-test'
+			process.env['volebo_model_enabled'] = true
+			process.env['volebo_model_db_main_connectionString'] = 'pg://user:pwd@localhost:5432/dbname?debug=true'
+
+			config = configLoad()
+		})
+
+		it.skip('-> [model.enabled] overrides bool value', () => {
+			const act = config.get('model.enabled')
+			expect(act).is.equal(true)
+		})
+
+		it('-> [session.name] overrides string value', () => {
+			const act = config.get('session.name')
+			expect(act).is.equal('sample-session-test')
+		})
+
+		it('-> [model.db.main.connectionString] was added as new property', () => {
+			const act = config.get('model.db.main.connectionString')
+			expect(act).is.equal('pg://user:pwd@localhost:5432/dbname?debug=true')
+		})
 	})
 })

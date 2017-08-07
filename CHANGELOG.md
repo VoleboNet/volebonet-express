@@ -6,7 +6,11 @@ This is the history of changes of the `@volebo/express` package
 
 ## unreleased // ???
 
+## 0.7.0 // 2017-08-07
+
 * new config object `Config`. Access to configuration only with `app.config.get('path')`
+* config files must have `volebo` as root node
+* easy to load config from the environment, using variables like `volebo_model_enabled`
 
 ## 0.6.1 // 2017-08-06
 
