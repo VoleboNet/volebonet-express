@@ -1,6 +1,6 @@
 # CHANGELOG
 
-```
+```yaml
 db    db  .8888.  dP     888888b 8888ba   .8888.     d8b   db  888888b d8888P
 88    88 d8'  `8b 88     88      88  `8b d8'  `8b    88V8  88  88        88
 Y8    8P 88    88 88     88aaa   88aa8P' 88    88    88 V8 88 a88aaa     88
@@ -14,7 +14,11 @@ This is the history of changes of the `@volebo/express` package
 > This file should be filled by maintainers, using pull requests
 > Please, follow this [guide](http://keepachangelog.com/en/0.3.0/)
 
-## unreleased // ???
+## 0.7.2 // 2017-08-15
+
+* log: write to graylog (UDP, not-configurable yet); add new property: `app.log`
+* HBS: rename helper __ => t, and make it alive (still a dirty implementation)
+* auth: load `passport` user to `res.locals.user`
 
 ## 0.7.1 // 2017-08-07
 
