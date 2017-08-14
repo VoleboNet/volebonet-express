@@ -51,7 +51,7 @@ describe('config-load', function(){
 			['model.enabled', false],
 			['model.debug', false],
 
-			['session.domains', ['volebo.net'] ],
+			['session.domains', ['.volebo.net'] ],
 			['proxy.list', ['loopback']]
 		]
 

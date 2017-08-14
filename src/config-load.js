@@ -88,7 +88,7 @@ function loadConfig(configPath, overrideOptions) {
 				'secret' : -1,
 				'secure' : false,
 				'domains': [
-					// '*.volebo.net',
+					'.volebo.net',
 				]
 			},
 

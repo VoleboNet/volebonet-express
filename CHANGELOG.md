@@ -19,6 +19,7 @@ This is the history of changes of the `@volebo/express` package
 * log: write to graylog (UDP, not-configurable yet); add new property: `app.log`
 * HBS: rename helper __ => t, and make it alive (still a dirty implementation)
 * auth: load `passport` user to `res.locals.user`
+* security: set default cookie domain in config
 
 ## 0.7.1 // 2017-08-07
 
