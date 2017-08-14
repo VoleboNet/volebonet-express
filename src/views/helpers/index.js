@@ -27,15 +27,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 'use strict'
 
-const _               = require('lodash');
-
+const _               = require('lodash')
+const debug           = require('debug')('volebo:express:views:helpers')
 
 // TODO : #17 remove this: require('./views/helpers'),
 module.exports = function(app) {
 	const helpers = {
-		__(key) {
-			// stupidiest way to support translations
-			return _.get(app.localization, 'en.' + key, key)
+		t(key, ...args) {
+			const options = args.pop()
+			const hash = options.hash
+			debug('called helper {{t}}:', key, args, hash)
+
+			// TODO: it is not proven, that `this` == `res`, but seems, like it is true
+			const res = this
+			const langCode = res.lang.code
+
+			let tr = _.get(app.localizations, `${langCode}.${key}`)
+			if (_.isNil(tr)) {
+				app.log.error({
+					'langCode': langCode,
+					'key': key,
+				}, 'Translation key is not defined')
+
+				tr = key
+			}
+			return tr
 		}
 	}
 
