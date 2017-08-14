@@ -286,8 +286,9 @@ const main = function main(configPath, overrideOptions) {
 	})
 	app.lang = langmw
 
-	app.lang.loadTranslation = function(json) {
-		_.set(app, 'localization.en', json)
+	app.lang.loadTranslation = function(lang, json) {
+		const realLang = lang || 'en'
+		_.set(app, `localizations.${realLang}`, json)
 	}
 
 	langmw.esu(app)
