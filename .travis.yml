@@ -28,7 +28,7 @@ sudo: false
 language: node_js
 
 node_js:
-  - 6
+  - 8
 
 # env:
 #  global:
@@ -75,7 +75,7 @@ deploy:
     secure: "Qha4UmPSbAvdW3Al4BMc6y++lBwr0mgfgkseZ10Gc9K2espOOZRwyKnULpzyjVzkYUqMlvGBSi1FSUmwBJa3sMYoZ++DHzBNcl1hlaTBuCupHB3ZSAEX1WJhBcNEm+bYuaR6WCfHuvMCiQNu+E+M6dqhuykMwI/yBu8sJGfpDkMvJNovG4zMnFCCAyzYlkJyqLA8X5Krjv/h/+nOZ/Nf7r6WJSSNOMgADGDbqkeK3ppKuWBlXg1rjhDBwQcE8rqkccLa6FlHsL16wztCwlulm5aT4sCBsA8z6nD75zJxbUlQzJD+CYo0eLZKCyl8Eq3tUuF6xfRMbNKfCbh8pUtiq5JIQAGgG27gQeJqHpFGCNxPrbz05x3BHkOj87uxx83MwlSP5zhhDKa6j/Ts0lG2zTdlTddR9qpIXZt9P1s53p1D+ryLQKzcMSZsDmwesSQpHeO8k4KOXlGGVMulpbf3/H3yhKDQ0ZTET/30OrSx5ePzditL6VK8OeP5MPxJ8o0XcgImr1HOvLHU4pI3cVu6SzkDfmdPeIG+ylSfH/b4fFHWKjaPUzbf5FbLHhBX6LcvBKs8w5MiIUhjgo1vvGIAROgflOK3H6ko5ViPQab4vXXdhgYnPgykgGxpnSpVrBxn6s7kIRG1cR2y67ykp42gnFNoKXdRzkz2Nz4Mm3YHQxI="
   on:
     tags: true
-    node_js: 6
+    node_js: 8
     repo: volebo/volebo-express
 
 after_deploy:
