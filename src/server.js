@@ -236,6 +236,26 @@ const main = function main(configPath, overrideOptions) {
 			debug('deserializing', obj)
 			done(null, obj)
 		})
+
+		app.use(function(req, res, next) {
+			let u = null
+			if (req.user) {
+				u = _(req.user)
+					.pick(req.user, [
+						'username',
+					])
+					.mapKeys((_, key) => {
+						return {
+							'username': 'username'
+						}[key]
+					})
+					.value()
+			}
+			debug('append user info to req.local', u)
+			res.locals.user = u
+
+			return next()
+		})
 	}
 
 	/*
