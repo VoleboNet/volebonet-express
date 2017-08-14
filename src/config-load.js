@@ -73,6 +73,8 @@ function loadConfig(configPath, overrideOptions) {
 
 			'debug': {
 				'renderStack': false,
+
+				// TODO: move from this section!
 				'staticPath': 'public',
 			},
 
