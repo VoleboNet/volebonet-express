@@ -62,7 +62,7 @@ const vbexp = function(configPath, overrideOptions) {
 		if (!done) {
 			done = function(err) {
 				if (err) {
-					throw err;
+					throw err
 				}
 			}
 		}
@@ -78,36 +78,36 @@ const vbexp = function(configPath, overrideOptions) {
 		debug('port', port)
 		debug('localpath', localpath)
 
-		const useLocalPath = !! localpath;
+		const useLocalPath = !! localpath
 
 		if (useLocalPath) {
-			debug('will listen on localpath');
-			host = null;
-			port = null;
+			debug('will listen on localpath')
+			host = null
+			port = null
 
 			try {
-				const stat = fs.statSync(localpath);
+				const stat = fs.statSync(localpath)
 				if (stat.isSocket()) {
-					debug('remove existing socket file', localpath);
+					debug('remove existing socket file', localpath)
 
-					fs.unlinkSync(localpath);
+					fs.unlinkSync(localpath)
 				} else {
-					deprecated_error_die(done, 'Can not start server, listening on NON-SOCKET file');
+					deprecated_error_die(done, 'Can not start server, listening on NON-SOCKET file')
 				}
 			} catch (e) {
 				if (e.code === 'ENOENT' && e.syscall==='stat') {
 					// do nothing, localpath-file does not exist
 				} else {
-					throw e;
+					throw e
 				}
 			}
 		} else {
-			debug('will listen on host:port');
-			localpath = null;
+			debug('will listen on host:port')
+			localpath = null
 		}
 
 		// Create HTTP server.
-		const server = http.createServer(app);
+		const server = http.createServer(app)
 
 		/**
 		 * Event listener for HTTP server "listening" event.
@@ -127,23 +127,21 @@ const vbexp = function(configPath, overrideOptions) {
 			log.error(error)
 
 			if (error.syscall !== 'listen') {
-				throw error;
+				throw error
 			}
 
 			const bind = useLocalPath
 				? 'Pipe ' + localpath
-				: 'Port ' + port;
+				: 'Port ' + port
 
 			// handle specific listen errors with friendly messages
 			switch (error.code) {
 			case 'EACCES':
-				deprecated_error_die(done, bind + ' requires elevated privileges');
-				break;
+				return deprecated_error_die(done, bind + ' requires elevated privileges')
 			case 'EADDRINUSE':
-				deprecated_error_die(done, bind + ' is already in use');
-				break;
+				return deprecated_error_die(done, bind + ' is already in use')
 			default:
-				return done(error);
+				return done(error)
 			}
 		}
 
@@ -171,17 +169,17 @@ const vbexp = function(configPath, overrideOptions) {
 		}
 
 		app.close = function() {
-			return server.close.apply(server, arguments);
+			return server.close.apply(server, arguments)
 		}
 
 		return
 	}
 
-	return app;
+	return app
 }
 
 vbexp.Router = function vbexp_Router() {
-	return express.Router.apply(express, arguments);
+	return express.Router.apply(express, arguments)
 }
 
-exports = module.exports = vbexp;
+exports = module.exports = vbexp

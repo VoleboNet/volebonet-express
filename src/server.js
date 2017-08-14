@@ -100,7 +100,7 @@ const log = bunyan.createLogger({
 
 debug('initializing')
 
-const main = function main(configPath, overrideOptions) {
+function main(configPath, overrideOptions) {
 	const app = express()
 
 	// securing with HTTP-headers
