@@ -55,7 +55,17 @@ const bunyan          = require('bunyan')
 const wwwLogger       = require('express-bunyan-logger')
 
 const langGen         = require('express-mw-lang')
-const VoleboModel     = require('@volebo/data')
+let VoleboModel       = null
+try {
+	VoleboModel       = require('@volebo/data')
+}
+catch (e) {
+	if (e.message.match(/Cannot find module/)) {
+		VoleboModel     = function FakeModel() { return { close() { return null } } }
+	} else {
+		throw e
+	}
+}
 
 // TODO : #17 replace with custom set of handlers!
 // BUG: #17

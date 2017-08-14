@@ -14,6 +14,10 @@ This is the history of changes of the `@volebo/express` package
 > This file should be filled by maintainers, using pull requests
 > Please, follow this [guide](http://keepachangelog.com/en/0.3.0/)
 
+## 0.7.3 // 2017-08-15
+
+* data: optional model loading
+
 ## 0.7.2 // 2017-08-15
 
 * log: write to graylog (UDP, not-configurable yet); add new property: `app.log`
