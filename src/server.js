@@ -242,17 +242,19 @@ function main(configPath, overrideOptions) {
 
 		if (app.config.get('auth.session')){
 			app.use(app.passport.session())
+
+			app.passport.serializeUser(function(user, done) {
+				// TODO: improve
+				debug('serializing', user)
+				done(null, user)
+			})
+
+			app.passport.deserializeUser(function(obj, done) {
+				// TODO: improve
+				debug('deserializing', obj)
+				done(null, obj)
+			})
 		}
-
-		app.passport.serializeUser(function(user, done) {
-			debug('serializing', user)
-			done(null, user)
-		})
-
-		app.passport.deserializeUser(function(obj, done) {
-			debug('deserializing', obj)
-			done(null, obj)
-		})
 
 		app.use(function(req, res, next) {
 			let u = null
@@ -268,7 +270,7 @@ function main(configPath, overrideOptions) {
 					})
 					.value()
 			}
-			debug('append user info to req.local', u)
+			debug('append user info to req.locals', u)
 			res.locals.user = u
 
 			return next()
