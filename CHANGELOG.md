@@ -18,7 +18,7 @@ This is the history of changes of the `@volebo/express` package
 > This file should be filled by maintainers, using pull requests
 > Please, follow this [guide](http://keepachangelog.com/en/0.3.0/)
 
-## unpublished // ?
+## 0.7.5 // 2017-09-15
 
 * proper way to auto-load `@volebo/data`
 * strict typed Errors. First class `NotFoundError`
