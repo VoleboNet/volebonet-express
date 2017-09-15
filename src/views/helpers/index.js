@@ -52,6 +52,10 @@ module.exports = function(app) {
 				tr = key
 			}
 			return tr
+		},
+
+		linkTo(path) {
+			return path
 		}
 	}
 

@@ -76,13 +76,15 @@ const configLoad      = require('./config-load')
 // 	port: 9998
 // })
 const gelfStream = require('gelf-stream')
-const stashStream = gelfStream.forBunyan('127.0.0.1')
-//glstream.end()
+const stashLogHostname = '127.0.0.1' //'volebo-logging'
+const stashStream = gelfStream.forBunyan(stashLogHostname)
+
 // TODO: autocreate log dir
+// TODO: gh #2 load log config from config
 const log = bunyan.createLogger({
 	name: 'volebo.express.server',
 	streams:[
-		{ path: 'log/express.log' },
+		{ stream: process.stdout },
 		{ type: 'raw', stream: stashStream },
 	],
 })
@@ -131,22 +133,27 @@ function main(configPath, overrideOptions) {
 	*/
 	if (app.config.get('model.enabled')) {
 		app.model = new VoleboModel(app.config.get('model'))
+
+		app.log.info(`app.model attached ${typeof app.model}`)
 	}
+	debug('app.model attached:', !!app.model)
 
 	/*
 	========================================================
 	COMMON MIDDLEWARES
 	========================================================
 	*/
+
 	// TODO: gh #2 load log config from config
 	const logConfig = {
 		name: 'volebo.express.server.www',
 		streams:[
-			{ path: 'log/www.log' },
+			{ stream: process.stdout },
 			{ type: 'raw', stream: stashStream },
 		],
 	}
 	app.use(wwwLogger(logConfig))
+	app.use(wwwLogger.errorLogger(logConfig))
 
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: false }))
