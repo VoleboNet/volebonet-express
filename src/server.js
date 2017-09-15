@@ -56,7 +56,9 @@ const flash           = require('express-flash')
 const _               = require('lodash')
 const moment          = require('moment')
 const bunyan          = require('bunyan')
-const wwwLogger       = require('express-bunyan-logger')
+const bunyanWww       = require('express-bunyan-logger')
+
+const raven           = require('raven')
 
 const langGen         = require('express-mw-lang')
 
@@ -128,6 +130,28 @@ function main(configPath, overrideOptions) {
 
 	/*
 	========================================================
+	SENTRY stuff
+	========================================================
+	*/
+	if (app.config.get('sentry.enabled')) {
+		// Must configure Raven before doing anything else with it
+		const _dsn = app.config.get('sentry.dsn')
+		const _opts = app.config.get('sentry.options') || {}
+
+		const _release = app.config.get('package.version')
+		if (!_.isNil(_release)) {
+			_opts['release'] = _release
+		}
+
+		debug('Sentry options', _opts)
+		raven.config(_dsn, _opts).install()
+
+		// The request handler must be the first middleware on the app
+		app.use(raven.requestHandler())
+	}
+
+	/*
+	========================================================
 	AUTOLOAD MODEL
 	========================================================
 	*/
@@ -152,8 +176,8 @@ function main(configPath, overrideOptions) {
 			{ type: 'raw', stream: stashStream },
 		],
 	}
-	app.use(wwwLogger(logConfig))
-	app.use(wwwLogger.errorLogger(logConfig))
+	app.use(bunyanWww(logConfig))
+	app.use(bunyanWww.errorLogger(logConfig))
 
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: false }))
@@ -384,8 +408,19 @@ function main(configPath, overrideOptions) {
 		const errorViewPath = path.join(__dirname, 'views', 'error.hbs')
 		const errorLayoutPath = path.join(__dirname, 'views', 'layouts', 'default.hbs')
 
+		if (app.config.get('sentry.enabled')) {
+			// The error handler must be before any other error middleware
+			debug('Sentry: connect error handler')
+			app.use(raven.errorHandler())
+		}
+
 		app.use(function global_error_dev(err, _unused_req, res, next) {
 			res.status(err.status || 500)
+
+			/*
+			// When sentry is enabled, additional info is accessble
+			// res.end(res.sentry + '\n');
+			*/
 
 			// development error handler
 			// will print stacktrace
