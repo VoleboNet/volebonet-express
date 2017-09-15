@@ -355,14 +355,14 @@ function main(configPath, overrideOptions) {
 		====================================
 		NOT FOUND HANDLER
 		catch 404 and forward to error handler
+		TODO: we could
 		====================================
 		*/
-		app.use(function(_unused_req, _unused_res, next) {
+		app.use(function(req, _unused_res, next) {
 			// TODO : pass required info to the error, such as URL, params...
-			const err = new Error('Not Found')
-			err.status = 404
+			const err = new errors.NotFoundError(req)
 
-			next(err)
+			return next(err)
 		})
 
 		/*
@@ -384,6 +384,8 @@ function main(configPath, overrideOptions) {
 			const pubStack = app.config.get('debug.renderStack')
 				? err.stack
 				: null
+
+			app.log.error(err)
 
 			return res.render(errorViewPath, {
 				message: err.message,
