@@ -20,12 +20,14 @@ This is the history of changes of the `@volebo/express` package
 
 ## unpublished // ??
 
-* optional **Sentry** integration
+* optional **Sentry** integration (see volebo/volebo-express#2)
 
 ## 0.7.5 // 2017-09-15
 
 * proper way to auto-load `@volebo/data`
 * strict typed Errors. First class `NotFoundError`
+
+* fix volebo/volebo-express#22 - logdir handling
 
 ## 0.7.3 // 2017-08-15
 
