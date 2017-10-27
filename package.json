@@ -1,10 +1,9 @@
 {
   "name": "@volebo/volebo-express",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "ExpressJS server for volebo.net",
   "main": "src/index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/volebo/express.git"
@@ -28,15 +27,12 @@
   "os": [
     "linux"
   ],
-  "engines": {
-  },
+  "engines": {},
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/volebo/express/issues"
   },
   "homepage": "https://github.com/volebo/express",
-  "dependencies": {
-  },
-  "devDependencies": {
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
