@@ -1,0 +1,42 @@
+{
+  "name": "@volebo/volebo-express",
+  "version": "0.7.5",
+  "description": "ExpressJS server for volebo.net",
+  "main": "src/index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/volebo/express.git"
+  },
+  "keywords": [
+    "express",
+    "expressjs",
+    "volebo.net",
+    "volebo"
+  ],
+  "author": {
+    "name": "volebo",
+    "url": "http://volebo.net"
+  },
+  "contributors": [
+    {
+      "name": "Koryukov Maksim",
+      "email": "maxkoryukov@gmail.com"
+    }
+  ],
+  "os": [
+    "linux"
+  ],
+  "engines": {
+  },
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/volebo/express/issues"
+  },
+  "homepage": "https://github.com/volebo/express",
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
