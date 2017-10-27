@@ -31,15 +31,20 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 'use strict'
 
-class NotFoundError extends Error {
-	constructor(req) {
-		super('Not found')
+exports = module.exports = function loader(logger) {
 
-		this.status = 404
-		this.path = req.originalUrl
-
-		delete this.stack
+	try {
+		const m = require('@volebo/data')
+		return m
 	}
-}
+	catch (e) {
+		if (!e.message.match(/Cannot find module/)) {
+			throw e
+		}
 
-exports.NotFoundError = NotFoundError
+		logger.warn('Stub used, instead of @volebo/data')
+		const fm = function FakeModel() { return { close() { return null } } }
+		return fm
+	}
+
+}

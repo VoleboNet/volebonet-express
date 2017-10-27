@@ -13,7 +13,7 @@
 ExpressJS for volebo.net
 
 Copyright (C) 2016-2017 Volebo <dev@volebo.net>
-Copyright (C) 2016-2017 Koryukov Maksim <maxkoryukov@gmail.com>
+Copyright (C) 2016-2017 Maksim Koryukov <maxkoryukov@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -66,9 +66,10 @@ const langGen         = require('express-mw-lang')
 // BUG: #17
 const handlebarsIntl  = require('handlebars-intl')
 
-const errors          = require('./errors')
-const configLoad      = require('./config-load')
-
+const errors            = require('./errors')
+const loadConfiguration = require('./loaders/configuration')
+const loadTranslations  = require('./loaders/translations')
+const loadModelModule   = require('./loaders/safe-model-module')
 
 
 
@@ -96,26 +97,11 @@ const log = bunyan.createLogger({
 
 debug('initializing')
 
-let VoleboModel       = null
-try {
-	VoleboModel       = require('@volebo/data')
-}
-catch (e) {
-	if (e.message.match(/Cannot find module/)) {
-		VoleboModel     = function FakeModel() { return { close() { return null } } }
-
-		log.warn('Stub used, instead of @volebo/data')
-	} else {
-		throw e
-	}
-}
+const VoleboModel       = loadModelModule(log)
 
 
 function main(configPath, overrideOptions) {
 	const app = express()
-
-	// securing with HTTP-headers
-	app.use(helmet())
 
 	/*
 	========================================================
@@ -125,8 +111,11 @@ function main(configPath, overrideOptions) {
 	without breaking core settings of the express
 	========================================================
 	*/
-	app.config = configLoad(configPath, overrideOptions)
+	app.config = loadConfiguration(configPath, overrideOptions)
 	app.log = log
+
+	// securing with HTTP-headers
+	app.use(helmet(app.config.get('security.helmet', {})))
 
 	/*
 	========================================================
@@ -158,7 +147,7 @@ function main(configPath, overrideOptions) {
 	if (app.config.get('model.enabled')) {
 		app.model = new VoleboModel(app.config.get('model'))
 
-		app.log.info(`app.model attached ${typeof app.model}`)
+		app.log.info(`app.model attached, type = [${typeof app.model}]`)
 	}
 	debug('app.model attached:', !!app.model)
 
@@ -321,6 +310,8 @@ function main(configPath, overrideOptions) {
 
 			moment.locale(lang_code)
 
+			// TODO: move this to the separated middleware "attach helpers"
+
 			// REF #6: We could use `defaultOptions`, attached to the
 			// `res` object. This approach could make the code
 			// more readable.
@@ -356,10 +347,9 @@ function main(configPath, overrideOptions) {
 	})
 	app.lang = langmw
 
-	app.lang.loadTranslation = function(lang, json) {
-		const realLang = lang || 'en'
-		_.set(app, `localizations.${realLang}`, json)
-	}
+	app.lang.loadTranslations = loadTranslations
+	// BUG: gh #4 fix this CWD shit
+	app.l10n = loadTranslations(path.join(process.cwd(), 'translations'))
 
 	langmw.esu(app)
 

@@ -1,26 +1,33 @@
-# volebo-express
+# @volebo/express
 
 ```yaml
-# db    db  .8888.  dP     888888b 8888ba   .8888.     d8b   db  888888b d8888P
-# 88    88 d8'  `8b 88     88      88  `8b d8'  `8b    88V8  88  88        88
-# Y8    8P 88    88 88     88aaa   88aa8P' 88    88    88 V8 88 a88aaa     88
-# `8b  d8' 88    88 88     88      88  `8b 88    88    88  V888  88        88
-#  `8bd8'  Y8.  .8P 88     88      88  .88 Y8.  .8P dP 88   V88  88        88
-#    YP     `888P'  88888P 888888P 888888'  `888P'  88 VP    8P  888888P   dP
+################################################################################
+#                                                                              #
+# db    db  .8888.  dP     888888b 8888ba   .8888.     d8b   db 888888b d8888P #
+# 88    88 d8'  `8b 88     88      88  `8b d8'  `8b    88V8  88 88        88   #
+# Y8    8P 88    88 88    a88aaa   88aa8P' 88    88    88 V8 88 88aaa     88   #
+# `8b  d8' 88    88 88     88      88  `8b 88    88    88  V888 88        88   #
+#  `8bd8'  Y8.  .8P 88     88      88  .88 Y8.  .8P dP 88   V88 88        88   #
+#    YP     `888P'  88888P 888888P 888888'  `888P'  88 VP    8P 888888P   dP   #
+#                                                                              #
+################################################################################
 ```
 
-[![Build Status](https://travis-ci.org/volebo/volebo-express.svg?branch=master)](https://travis-ci.org/volebo/volebo-express)
-[![codecov](https://codecov.io/gh/volebo/volebo-express/branch/master/graph/badge.svg)](https://codecov.io/gh/volebo/volebo-express)
-[![bitHound Overall Score](https://www.bithound.io/github/volebo/volebo-express/badges/score.svg)](https://www.bithound.io/github/volebo/volebo-express)
-[![bitHound Dependencies](https://www.bithound.io/github/volebo/volebo-express/badges/dependencies.svg)](https://www.bithound.io/github/volebo/volebo-express/master/dependencies/npm)
-[![npm version](https://img.shields.io/npm/v/@volebo/volebo-express.svg)](https://www.npmjs.com/package/@volebo/volebo-express)
-[![npm downloads](https://img.shields.io/npm/dm/@volebo/volebo-express.svg)](https://www.npmjs.com/package/@volebo/volebo-express)
+[![Build Status](https://travis-ci.org/volebo/express.svg?branch=master)](https://travis-ci.org/volebo/express)
+[![codecov](https://codecov.io/gh/volebo/express/branch/master/graph/badge.svg)](https://codecov.io/gh/volebo/express)
+[![bitHound Overall Score](https://www.bithound.io/github/volebo/express/badges/score.svg)](https://www.bithound.io/github/volebo/express)
+[![bitHound Dependencies](https://www.bithound.io/github/volebo/express/badges/dependencies.svg)](https://www.bithound.io/github/volebo/express/master/dependencies/npm)
+[![npm version](https://img.shields.io/npm/v/@volebo/express.svg)](https://www.npmjs.com/package/@volebo/express)
+[![npm downloads](https://img.shields.io/npm/dm/@volebo/express.svg)](https://www.npmjs.com/package/@volebo/express)
 
 Express JS server for Volebo.Net
 
 ## Usage
 
-First, use this project as a dependency for your project. Right now there is a lot of tiny fixes in the source code, so the best way - use `npm link`, not `npm install`.
+First, use this project as a dependency for your project.
+
+Since the codebase isn't mature (at any level), it is better to use
+`npm link @volebo/express` than `npm install`.
 
 Then, just follow this sample:
 
@@ -28,7 +35,7 @@ Then, just follow this sample:
 "use strict";
 
 // require the module:
-const vbexpress       = require('@volebo/volebo-express');
+const vbexpress       = require('@volebo/express');
 
 // create an instance with appropriate options:
 var app = vbexpress( { "options" : "your options here"} );

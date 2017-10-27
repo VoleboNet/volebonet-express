@@ -13,7 +13,7 @@
 ExpressJS for volebo.net
 
 Copyright (C) 2016-2017 Volebo <dev@volebo.net>
-Copyright (C) 2016-2017 Koryukov Maksim <maxkoryukov@gmail.com>
+Copyright (C) 2016-2017 Maksim Koryukov <maxkoryukov@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 const vbexpress = require('./')
 
-describe('server properties', function(){
+describe(filename2suitename(__filename), function(){
 	it('config', function () {
 		const app = vbexpress()
 

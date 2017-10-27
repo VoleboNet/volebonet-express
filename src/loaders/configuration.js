@@ -13,7 +13,7 @@
 ExpressJS for volebo.net
 
 Copyright (C) 2016-2017 Volebo <dev@volebo.net>
-Copyright (C) 2016-2017 Koryukov Maksim <maxkoryukov@gmail.com>
+Copyright (C) 2016-2017 Maksim Koryukov <maxkoryukov@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -33,8 +33,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 const nconf           = require('nconf')
 const yaml            = require('js-yaml')
+const fs              = require('fs')
+const path            = require('path')
 
-const debug           = require('debug')('volebo:express:config')
+const debug           = require('debug')('volebo:express:loaders:configuration')
 
 const yamlFormat = {
 	stringify(obj, options) {
@@ -67,57 +69,8 @@ class Config {
 }
 
 function loadConfig(configPath, overrideOptions) {
-	const defs = {
-		'volebo': {
-			// information from package.json (taken from main project)
-			//'package': undefined,
-
-			'server': {
-				'host': '127.0.0.1',
-				'port': 3000,
-				'path': null
-			},
-
-			'debug': {
-				'renderStack': false,
-
-				// TODO: move from this section!
-				'staticPath': 'public',
-			},
-
-			'sentry': {
-				'enabled': false,
-			},
-
-			'flash': {
-				'enabled': false,
-			},
-
-			'session': {
-				'enabled': true,
-				'name': 'sessionId',
-				'secret' : -1,
-				'secure' : false,
-				'domains': [
-					'.volebo.net',
-				]
-			},
-
-			'auth': {
-				'enabled': true,
-				'session': true,
-			},
-
-			'proxy': {
-				'list': ['loopback']
-			},
-
-			'model': {
-				'enabled': false,
-				'debug': false,
-			},
-		},
-	}
+	const _defsPath = path.resolve(path.join(__dirname, 'configuration.default.yml'))
+	const defs = yaml.load(fs.readFileSync(_defsPath, 'utf8'))
 
 	nconf.use('overrides', {
 		type: 'literal',

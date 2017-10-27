@@ -13,7 +13,7 @@
 ExpressJS for volebo.net
 
 Copyright (C) 2016-2017 Volebo <dev@volebo.net>
-Copyright (C) 2016-2017 Koryukov Maksim <maxkoryukov@gmail.com>
+Copyright (C) 2016-2017 Maksim Koryukov <maxkoryukov@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,9 +35,9 @@ const expect = require('chai').expect
 const _      = require('lodash')
 const path   = require('path')
 
-const configLoad = require('./config-load')
+const configLoad = require('./configuration')
 
-describe('config-load', function(){
+describe(filename2suitename(__filename), function(){
 
 	describe('default values', function() {
 
@@ -99,7 +99,7 @@ describe('config-load', function(){
 
 		describe('yaml', () => {
 
-			const configPath = path.join(__dirname, '../test/samples/config-readYaml-01.yml')
+			const configPath = path.join(__dirname, '../../test/samples/config-readYaml-01.yml')
 			let config = null
 
 			beforeEach(() => {

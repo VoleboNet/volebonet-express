@@ -1,6 +1,6 @@
 {
-  "name": "@volebo/volebo-express",
-  "version": "0.7.5",
+  "name": "@volebo/express",
+  "version": "0.7.6",
   "description": "ExpressJS server for volebo.net",
   "main": "src/index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/volebo/volebo-express.git"
+    "url": "git+https://github.com/volebo/express.git"
   },
   "keywords": [
     "express",
@@ -32,14 +32,14 @@
     "linux"
   ],
   "engines": {
-    "node": ">=4.0.0",
-    "npm": ">=3.0.0"
+    "node": ">=6.0.0",
+    "npm": ">=5.0.0"
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/volebo/volebo-express/issues"
+    "url": "https://github.com/volebo/express/issues"
   },
-  "homepage": "https://github.com/volebo/volebo-express",
+  "homepage": "https://github.com/volebo/express",
   "dependencies": {
     "body-parser": "^1.18.2",
     "bunyan": "^1.8.12",
@@ -62,6 +62,7 @@
     "raven": "^2.2.1"
   },
   "devDependencies": {
+    "@volebo/mocha-helpers": "^0.1.0",
     "chai": "^4.1.2",
     "eslint": "^4.9.0",
     "eslint-config-volebo": "^2.3.3",

@@ -20,14 +20,26 @@ This is the history of changes of the `@volebo/express` package
 
 ## unpublished // ??
 
-* optional **Sentry** integration (see volebo/volebo-express#2)
+* optional **Sentry** integration (gh #2)
+* allow to configure **Helmet**
+
+* move several functions to `/loaders`
+* move default configuration to YAML file (easier to maintain and copy)
+* rename tests (introduce `@volebo/mocha-helpers`)
+* other refactoring stuff
+
+## 0.7.6 // 2017-10-27
+
+* **rename to `@volebo/express`** (gh #10)
+
+* see #10
 
 ## 0.7.5 // 2017-09-15
 
 * proper way to auto-load `@volebo/data`
 * strict typed Errors. First class `NotFoundError`
 
-* fix volebo/volebo-express#22 - logdir handling
+* fix volebo/express#22 - logdir handling
 
 ## 0.7.3 // 2017-08-15
 
@@ -45,10 +57,10 @@ This is the history of changes of the `@volebo/express` package
 * new config object `Config`. Access to configuration only with `app.config.get('path')`
 * config files must have `volebo` as root node
 * easy to load config from the environment, using variables like `volebo_model_enabled`
-* add `log` dir to git, because FYTIW (new bug: gh see #22)
+* add `log` dir to git, because FYTIW (new bug: gh #22)
 * set default value for `session.domains`: `['volebo.net']`
 * accurate model create/dispose
-* use [`express-flash`](https://www.npmjs.com/package/express-flash) (gh see #24)
+* use [`express-flash`](https://www.npmjs.com/package/express-flash) (gh #24)
 
 * well-tune `istanbul` (coverage tool)
 
@@ -64,7 +76,7 @@ This record includes changes from previos releases
 * HBS: move views to new folder
 * HBS: reorganize helpers (init through function)
 * ERROR handling: fixed bug with unaccessible layout for error-rendering
-* migrate to `bunyan` (instead of `morgan`) for logging (see #2)
+* migrate to `bunyan` (instead of `morgan`) for logging (gh #2)
 
 * see #2
 
