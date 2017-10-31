@@ -53,6 +53,8 @@ const commonLogConfig = {
 	name: 'volebo.express.server',
 	streams:[
 		{ stream: process.stdout },
+
+		// TODO: be carefull, need to close this stream explicitly!
 		//{ type: 'raw', stream: stashStream },
 	],
 }
