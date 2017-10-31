@@ -20,6 +20,8 @@ This is the history of changes of the `@volebo/express` package
 
 ## unpublished // ??
 
+## 0.8.0 // 2017-10-31
+
 * optional **Sentry** integration (gh #2)
 * allow to configure **Helmet**
 * use [messageformat.js](https://github.com/messageformat/messageformat.js) for i18n
