@@ -35,21 +35,16 @@ const debug           = require('debug')('volebo:express')
 const fs              = require('fs')
 const http            = require('http')
 const express         = require('express')
-const bunyan          = require('bunyan')
 
-
+const logger          = require('./logger')
 const createListener  = require('./server')
-const log = bunyan.createLogger({
-	name: 'volebo:express',
-	streams:[{
-		path: 'log/express.log',
-	}],
-})
 
 const deprecated_error_die = function(done, msg) {
 	const e = new Error(msg)
 	done(e)
 }
+
+const log = logger.getLogger('volebo.express')
 
 /*
 ====================================

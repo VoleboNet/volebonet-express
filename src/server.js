@@ -55,42 +55,21 @@ const flash           = require('express-flash')
 
 const _               = require('lodash')
 const moment          = require('moment')
-const bunyan          = require('bunyan')
-const bunyanWww       = require('express-bunyan-logger')
 
 const raven           = require('raven')
 
 const langGen         = require('express-mw-lang')
 
+const logger          = require('./logger')
 
-const errors            = require('./errors')
-const loadConfiguration = require('./loaders/configuration')
-const readL10n          = require('./loaders/l10n')
-const loadModelModule   = require('./loaders/safe-model-module')
-
+const errors             = require('./errors')
+const loadConfiguration  = require('./loaders/configuration')
+const readL10n           = require('./loaders/l10n')
+const loadModelModule    = require('./loaders/safe-model-module')
 const registerHbsHelpers = require('./hbs-helpers')
 
 
-// const bstcp = require('bunyan-logstash-tcp')
-// const logstashStream = bstcp.createStream({
-// 	host: '127.0.0.1',
-// 	port: 9998
-// })
-const gelfStream = require('gelf-stream')
-const stashLogHostname = '127.0.0.1' //'volebo-logging'
-const stashStream = gelfStream.forBunyan(stashLogHostname)
-
-// TODO: autocreate log dir
-// TODO: gh #2 load log config from config
-const log = bunyan.createLogger({
-	name: 'volebo.express.server',
-	streams:[
-		{ stream: process.stdout },
-		{ type: 'raw', stream: stashStream },
-	],
-})
-
-
+const log = logger.getLogger('volebo.express.server')
 
 
 debug('initializing')
@@ -155,16 +134,8 @@ function main(configPath, overrideOptions) {
 	========================================================
 	*/
 
-	// TODO: gh #2 load log config from config
-	const logConfig = {
-		name: 'volebo.express.server.www',
-		streams:[
-			{ stream: process.stdout },
-			{ type: 'raw', stream: stashStream },
-		],
-	}
-	app.use(bunyanWww(logConfig))
-	app.use(bunyanWww.errorLogger(logConfig))
+	app.use(logger.getWwwLogger('volebo.express.server.www'))
+	app.use(logger.getWwwErrorLogger('volebo.express.server.www'))
 
 	app.use(bodyParser.json())
 	app.use(bodyParser.urlencoded({ extended: false }))
