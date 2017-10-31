@@ -81,7 +81,7 @@ deploy:
   on:
     tags: true
     node_js: 8
-    repo: volebo/volebo-express
+    repo: volebo/express
 
 after_deploy:
   # Send notification to Slack:
