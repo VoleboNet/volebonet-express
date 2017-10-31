@@ -32,20 +32,29 @@ Since the codebase isn't mature (at any level), it is better to use
 Then, just follow this sample:
 
 ```javascript
-"use strict";
+'use strict'
 
 // require the module:
-const vbexpress       = require('@volebo/express');
+const vbexpress       = require('@volebo/express')
+
+const configPath = 'server/config.yaml'
+const overrideOpts = {
+	'debug': true
+}
 
 // create an instance with appropriate options:
-var app = vbexpress( { "options" : "your options here"} );
+const app = vbexpress(configPath, overrideOpts)
 
-// Add routes:
-var routes = require('./routes/index');
-app.use('/', routes);
+// Add routes (no lang-handler):
+const routes = require('./routes')
+app.use('/', routes)
+
+// Add routes with language-culture detection:
+const routesL10N = require('./routes2')
+app.lang.use('/', routesL10N)
 
 // start handling
-app.start();
+app.start()
 ```
 
 ## Additional properties
@@ -56,7 +65,8 @@ Custom configuration of the server. It contains our own crutches and fixes.
 
 #### `app.hbs`
 
-Handlebars engine
+Handlebars engine with registered [HBS-helpers](http://assemble.io/helpers/)
+by [Assemble]-team
 
 #### `app.lang`
 
@@ -106,6 +116,8 @@ All thanks and praises go to:
 * [Express Handlebars](https://github.com/ericf/express-handlebars)
 * [PassportJS] and Jared Hanson
 * [Bunyan Logger][npm-bunyan]
+* [MessageFormat] for their implementation of ICU standard (I18N/L10N)
+* [Sentry] - awesome error collector
 
 ## License
 
@@ -116,3 +128,6 @@ Please, follow the link: [LICENSE](https://github.com/volebo/volebo-express/raw/
 [npm-bunyan]: https://www.npmjs.com/package/bunyan
 
 [PassportJS]: http://passportjs.org/
+[Assemble]: http://assemble.io
+[MessageFormat]: https://messageformat.github.io
+[Sentry]: https://sentry.io

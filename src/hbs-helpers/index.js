@@ -44,21 +44,23 @@ module.exports = function registerHbsHelpers(app) {
 		// 	const hash = options.hash
 		// 	debug('called helper {{t}}:', key, args, hash)
 
-
 		t(key, options) {
 
 			//const options = args.pop()
 			const hash = options.hash
+
+			const rootData = _.get(options, 'data.root', -1)
+
+			if (-1 === rootData) {
+				throw new Error(`Wrong arity of HBS-helper {{t}} near key [${key}]`)
+			}
+
 			//debug('called helper {{t}}:', key, args, hash)
 			debug(`called helper {{t}}, key [${key}] hash`, hash)
 
-			// TODO: it is not proven, that `this` == `res`, but seems, like it is true
-			const res = this
-			//const app = res.app
-			const langCode = res.lang.code
+			const langCode = rootData.lang.code
 
 			// content of app.l10n is described in the ../../loaders/translations.js
-
 			const langObj = app.l10n[langCode]
 
 			if (!langObj) {
@@ -80,7 +82,11 @@ module.exports = function registerHbsHelpers(app) {
 
 				return key
 			}
-			return tr
+
+			// tr is a function (we are going to complile all translations
+			// with a messageFormat.js
+
+			return tr(hash)
 		},
 
 		linkTo(path) {
@@ -116,12 +122,12 @@ module.exports = function registerHbsHelpers(app) {
 	// * url
 
 	const _categories = [
-		'',
+		'comparison',
+		'string',
 	]
 
 	const helpers = hbsHelpers3(_categories, {hbs: app.hbs})
 	_.merge(customHelpers, helpers)
-
 
 	return customHelpers
 }

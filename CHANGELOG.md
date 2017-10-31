@@ -22,11 +22,18 @@ This is the history of changes of the `@volebo/express` package
 
 * optional **Sentry** integration (gh #2)
 * allow to configure **Helmet**
+* use [messageformat.js](https://github.com/messageformat/messageformat.js) for i18n
+* use [Assemble](http://assemble.io/helpers/) as HBS-helpers collection (gh #17)
 
 * move several functions to `/loaders`
 * move default configuration to YAML file (easier to maintain and copy)
 * rename tests (introduce `@volebo/mocha-helpers`)
 * other refactoring stuff
+
+#### Issues
+
+* see #17 - HBS helpers
+* see #2 - error handling
 
 ## 0.7.6 // 2017-10-27
 

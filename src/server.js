@@ -68,9 +68,10 @@ const handlebarsIntl  = require('handlebars-intl')
 
 const errors            = require('./errors')
 const loadConfiguration = require('./loaders/configuration')
-const loadTranslations  = require('./loaders/translations')
+const readL10n          = require('./loaders/l10n')
 const loadModelModule   = require('./loaders/safe-model-module')
 
+const registerHbsHelpers = require('./hbs-helpers')
 
 
 // const bstcp = require('bunyan-logstash-tcp')
@@ -306,7 +307,7 @@ function main(configPath, overrideOptions) {
 	const langmw = langGen({
 		defaultLanguage: 'en',
 		availableLanguages: ['en', 'ru', 'zh'],
-		onLangCodeReady: function(lang_code, _unused_req, res) {
+		onLangDetected: function(lang_code, _unused_req, res) {
 
 			moment.locale(lang_code)
 
@@ -346,10 +347,16 @@ function main(configPath, overrideOptions) {
 		}
 	})
 	app.lang = langmw
+	app.l10n = {}
 
-	app.lang.loadTranslations = loadTranslations
+	const _availableLangCodes = _.map(langmw.available, 'code')
+	app.lang.loadL10n = function app_lang_loadL10n(folder) {
+		const _newL10n = readL10n(folder, _availableLangCodes)
+		_.assign(app.l10n, _newL10n)
+	}
+
 	// BUG: gh #4 fix this CWD shit
-	app.l10n = loadTranslations(path.join(process.cwd(), 'translations'))
+	app.lang.loadL10n(path.join(process.cwd(), 'l10n'))
 
 	langmw.esu(app)
 
@@ -362,7 +369,7 @@ function main(configPath, overrideOptions) {
 		layoutsDir: path.join(__dirname, 'views', 'layouts'),
 		partialsDir: path.join(__dirname, 'views', 'partials'),		// TODO : #13 use NAMESPACES
 		defaultLayout: 'default',
-		helpers: require('./views/helpers')(app),
+		helpers: registerHbsHelpers(app),
 		extname: '.hbs'
 	})
 	app.set('views', path.join(__dirname, 'views'))
