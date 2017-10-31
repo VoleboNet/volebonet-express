@@ -40,9 +40,12 @@ const bunyanWww       = require('express-bunyan-logger')
 // 	host: '127.0.0.1',
 // 	port: 9998
 // })
-const gelfStream = require('gelf-stream')
-const stashLogHostname = '127.0.0.1' //'volebo-logging'
-const stashStream = gelfStream.forBunyan(stashLogHostname)
+
+
+// // TODO: enable GrayLog logger (https://www.npmjs.com/package/gelf-stream)
+// const gelfStream = require('gelf-stream')
+// const stashLogHostname = '127.0.0.1' //'volebo-logging'
+// const stashStream = gelfStream.forBunyan(stashLogHostname)
 
 
 // TODO: gh #2 load log config from config
@@ -50,7 +53,7 @@ const commonLogConfig = {
 	name: 'volebo.express.server',
 	streams:[
 		{ stream: process.stdout },
-		{ type: 'raw', stream: stashStream },
+		//{ type: 'raw', stream: stashStream },
 	],
 }
 
