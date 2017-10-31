@@ -62,9 +62,6 @@ const raven           = require('raven')
 
 const langGen         = require('express-mw-lang')
 
-// TODO : #17 replace with custom set of handlers!
-// BUG: #17
-const handlebarsIntl  = require('handlebars-intl')
 
 const errors            = require('./errors')
 const loadConfiguration = require('./loaders/configuration')
@@ -369,13 +366,11 @@ function main(configPath, overrideOptions) {
 		layoutsDir: path.join(__dirname, 'views', 'layouts'),
 		partialsDir: path.join(__dirname, 'views', 'partials'),		// TODO : #13 use NAMESPACES
 		defaultLayout: 'default',
-		helpers: registerHbsHelpers(app),
 		extname: '.hbs'
 	})
 	app.set('views', path.join(__dirname, 'views'))
 	app.hbs = hbs
-
-	handlebarsIntl.registerWith(hbs.handlebars)
+	app.hbs.helpers = registerHbsHelpers(app)
 
 	app.engine('hbs', hbs.engine)
 	app.set('view engine', 'hbs')

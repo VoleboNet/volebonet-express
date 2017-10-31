@@ -35,8 +35,14 @@ const _               = require('lodash')
 const debug           = require('debug')('volebo:express:views:helpers')
 const hbsHelpers3     = require('handlebars-helpers')
 
-// TODO : #17 remove this: require('./views/helpers'),
+
+// TODO : #17 replace with custom set of handlers!
+// BUG: #17
+const handlebarsIntl  = require('handlebars-intl')
+
+
 module.exports = function registerHbsHelpers(app) {
+
 	const customHelpers = {
 
 		// t(domain, key, ...args) {
@@ -126,8 +132,12 @@ module.exports = function registerHbsHelpers(app) {
 		'string',
 	]
 
-	const helpers = hbsHelpers3(_categories, {hbs: app.hbs})
+	const helpers = hbsHelpers3(_categories, {'hbs': app.hbs.handlebars})
 	_.merge(customHelpers, helpers)
+
+
+	handlebarsIntl.registerWith(app.hbs.handlebars)
+
 
 	return customHelpers
 }
