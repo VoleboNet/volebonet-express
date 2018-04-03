@@ -1,6 +1,6 @@
 {
   "name": "@volebo/express",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "ExpressJS server for volebo.net",
   "license": "GPL-3.0",
   "private": false,
