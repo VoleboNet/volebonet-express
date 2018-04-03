@@ -20,6 +20,10 @@ This is the history of changes of the `@volebo/express` package
 
 ## unpublished // ??
 
+## 0.8.4 // 2018-04-03
+
+* update dependencies
+
 ## 0.8.0 // 2017-10-31
 
 * optional **Sentry** integration (gh #2)
