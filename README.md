@@ -20,6 +20,8 @@
 [![npm version](https://img.shields.io/npm/v/@volebo/express.svg)](https://www.npmjs.com/package/@volebo/express)
 [![npm downloads](https://img.shields.io/npm/dm/@volebo/express.svg)](https://www.npmjs.com/package/@volebo/express)
 
+https://codeclimate.com/github/volebo/volebo-express
+
 Express JS server for Volebo.Net
 
 ## Usage
